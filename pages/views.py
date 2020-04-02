@@ -12,3 +12,7 @@ def villagers(request):
 
 def arr(request):
     return render(request, 'pages/arr.html')
+
+def my_design(request):
+    pic = PhotoForm.objects.all()
+    return render(request, 'pages/my_design.html')
