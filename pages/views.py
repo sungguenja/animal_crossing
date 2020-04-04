@@ -31,7 +31,7 @@ def your_design(request):
         
         if form.is_valid():
             form.save()
-            return redirect('/wiki_like/my_design/success/')
+            return redirect('/wiki_like/my_design/')
     else:
         form = Design_Form()
     return render(request, 'pages/affect.html', {'form': form})
