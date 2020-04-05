@@ -1,1 +1,26 @@
 {% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+{% for dt in now %}
+<div class="card col-3 bg-transparent text-dark" style="width: 18rem;">
+  <img src="{{ dt.6 }}" class="card-img-top" alt="..." height="400">
+  <div class="card-body row">
+    <p class="card-text col-6">{{ dt.0 }}</p>
+    <div class="btn-group col-6">
+        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          상세정보
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item">성별 : {{ dt.3 }}</a>
+          <a class="dropdown-item">생일 : {{ dt.4 }}</a>
+          <a class="dropdown-item">성격 : {{ dt.5 }}</a>
+          <a class="dropdown-item">일본 이름 : {{ dt.1 }}</a>
+          <a class="dropdown-item">영어 이름 : {{ dt.2 }}</a>
+        </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

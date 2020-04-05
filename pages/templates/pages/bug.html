@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">이름</th>
+            <th scope="col">모양</th>
+            <th scope="col">출몰기간</th>
+            <th scope="col">출몰시간</th>
+            <th scope="col">출몰장소</th>
+            <th scope="col">가격</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dt in now %}
+          <tr>
+            <th scope="row">{{ dt.0 }}</th>
+            <td><img src="{{ dt.1 }}" height='30'></td>
+            <td>{{ dt.2 }}</td>
+            <td>{{ dt.3 }}</td>
+            <td>{{ dt.4 }}</td>
+            <td>{{ dt.5 }}</td>
+            <td>{{ dt.6 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+{% endblock %}

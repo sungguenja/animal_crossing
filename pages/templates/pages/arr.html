@@ -1,1 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+  <div class='col-md-5 col-12'>
+    <h1 class='d-none d-md-block'>벌레는 이쪽입니다</h1>
+    <h1 class='d-block d-md-none'>벌레</h1>
+      <a href="/wiki_like/arr/bugs/"><img class='col-12' src="{% static 'bugs.jpg' %}"></a>
+  </div>
+  <div class='col-12 offset-none offset-md-2 col-md-5'>
+    <h1 class='d-none d-md-block'>물고기는 이쪽입니다</h1>
+    <h1 class='d-block d-md-none'>물고기</h1>
+      <a href="/wiki_like/arr/fishes/"><img class='col-12' src="{% static 'fishes.jpg' %}"></a>
+  </div>
+</div>
+{% endblock %}

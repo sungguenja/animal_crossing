@@ -8,6 +8,8 @@ urlpatterns = [
     path('nook/', views.nook),
     path('villagers/', views.villagers),
     path('arr/', views.arr),
+    path('arr/bugs/', views.all_bug),
+    path('arr/fishes/', views.all_fish),
     path('my_design/', views.my_design),
     path('my_design/your_design/', views.your_design),
     path('my_design/affect/', views.your_design),
