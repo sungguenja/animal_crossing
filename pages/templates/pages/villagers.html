@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
 {% for dt in now %}
-<div class="card col-3 bg-transparent text-dark" style="width: 18rem;">
+<div class="card col-6 col-md-4 col-lg-3 bg-transparent text-dark" style="width: 18rem;">
   <img src="{{ dt.6 }}" class="card-img-top" alt="..." height="400">
   <div class="card-body row">
     <p class="card-text col-6">{{ dt.0 }}</p>
@@ -11,7 +11,7 @@
         <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           상세정보
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item">성별 : {{ dt.3 }}</a>
           <a class="dropdown-item">생일 : {{ dt.4 }}</a>
           <a class="dropdown-item">성격 : {{ dt.5 }}</a>

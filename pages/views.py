@@ -51,7 +51,7 @@ def all_bug(request):
             if line%7==0:
                 gate.append(re.sub('[^가-힣]','',value))
             elif line%7==1:
-                gate.append(value[:-1])
+                gate.append(str(line//7)+'.png')
             elif line%7==2:
                 gate.append(value[:-1])
             elif line%7==3:
@@ -83,7 +83,7 @@ def all_fish(request):
             if line%8==0:
                 gate.append(re.sub('[^가-힣]','',value))
             elif line%8==1:
-                gate.append(value[:-1])
+                gate.append(str(line//8)+'.png')
             elif line%8==2:
                 gate.append(value[:-1])
             elif line%8==3:
