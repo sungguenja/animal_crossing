@@ -1,23 +1,68 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="row">
 {% for dt in now %}
 <div class="card col-6 col-md-4 col-lg-3 bg-transparent text-dark" style="width: 18rem;">
-  <img src="{{ dt.6 }}" class="card-img-top" alt="..." height="400">
-  <div class="card-body row">
-    <p class="card-text col-6">{{ dt.0 }}</p>
-    <div class="btn-group col-6">
-        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          상세정보
+  <button type="button" class="btn" data-toggle="modal" data-target="#{{ dt.0 }}">
+    <img src="{% static 'villagers/villagers/' %}{{ dt.6 }}" class="card-img-top" alt="{{ dt.6 }}" height="400">
+  </button>
+  <div class="card-body row text-center">
+    <p class="card-text col-12">{{ dt.0 }}</p>
+  </div>
+</div>
+
+<div class="modal fade" id="{{ dt.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ dt.0 }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item">성별 : {{ dt.3 }}</a>
-          <a class="dropdown-item">생일 : {{ dt.4 }}</a>
-          <a class="dropdown-item">성격 : {{ dt.5 }}</a>
-          <a class="dropdown-item">일본 이름 : {{ dt.1 }}</a>
-          <a class="dropdown-item">영어 이름 : {{ dt.2 }}</a>
+      </div>
+      <div class="modal-body row">
+        <div class="col-6">
+          <p>이름: {{ dt.0 }}</p>
+          <p>일본이름: {{ dt.1 }}</p>
+          <p>영어이름: {{ dt.2 }}</p>
+          <p>성별: {{ dt.3 }}</p>
+          <p>생일: {{ dt.4 }}</p>
+          <p>성격: {{ dt.5 }}</p>
+          {% if dt.0 == '로빈' %}
+          <a href="https://www.youtube.com/watch?v=251l1KKiCrw" target="_blank">밥!</a>
+          {% elif dt.0 == '충성' %}
+          <a href="https://www.youtube.com/watch?v=r1Nt6xYPgBA" target="_blank">^^7</a>
+          {% elif dt.0 == '잭슨' %}
+          <b>나는 있다 ㅎㅎㅎ</b>
+          {% elif dt.0 == '모니카'%}
+          <b>소니아같아.....</b>
+          {% elif dt.0 == '쭈니' %}
+          <a href="https://www.youtube.com/watch?v=fq_-i293hl4" target="_blank">커여워</a>
+          {% elif dt.0 == '에바' %}
+          <a href="https://www.google.com/search?q=%EC%82%BC%EC%A7%84%EC%97%90%EB%B0%94&sxsrf=ALeKk00h3P7MK_YOPbpLmWfTrN9mEdc9Zg:1586872445714&tbm=isch&source=iu&ictx=1&fir=zfnIq8V7axqqMM%253A%252C49DX5Ul9ly3rZM%252C_&vet=1&usg=AI4_-kQ0OGcxJO2WcEXK_Fh-i6oCei2DkQ&sa=X&ved=2ahUKEwjMzLjDiOjoAhWPOnAKHZ7-BjcQ9QEwAHoECAoQFA#imgrc=zfnIq8V7axqqMM:" target="_blank">삼진 에바</a>
+          {% elif dt.0 == '헐크' %}
+          <button class="btn btn-success">헐크</button>
+          {% elif dt.0 == '슈베르트' %}
+          <a href="https://youtu.be/jA8v5y_gcvA" target="_blank">아버지 뒤에 마왕이 보여요</a>
+          {% elif dt.0 == '탁호' %}
+          <a href="https://www.google.com/maps/d/u/0/viewer?mid=1EdVUZBtD6W4G0QMMXKVoLU-MzmCM3WmE&hl=ko&ll=37.257917144210296%2C127.05534659116995&z=13" target="_blank">언제나 맛있지</a>
+          {% elif dt.0 == '쪼끼' %}
+          <a href="https://www.youtube.com/watch?v=rneay0FfqFA" target="_blank">까마귀</a>
+          {% elif dt.0 == '피엘' %}
+          <a href="https://www.youtube.com/watch?v=hpXD2hwHjC8" target="_blank">그때는 조커가 되는거야!</a>
+          {% elif dt.0 == '티미' %}
+          <a href="https://www.youtube.com/watch?v=18P30OS-l7Y" target="_blank">티미티미티미 터너</a>
+          {% elif dt.0 == '스트로베리' %}
+          <a href="https://www.youtube.com/watch?v=Yi89dLf9MUk" target="_blank">딸기가 빠졌잖아</a>
+          {% endif %}
         </div>
+        <img src="{% static 'villagers/villagers/' %}{{ dt.6 }}" class="card-img-top col-6" alt="{{ dt.6 }}" height="400">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+      </div>
     </div>
   </div>
 </div>

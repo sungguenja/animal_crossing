@@ -24,6 +24,7 @@ def villagers(request):
     for line, value in enumerate(f):
         gate.append(value[:-1])
         if line%7==6:
+            gate[-1] = str(gate[0])+'.png'
             now.append(gate)
             gate=[]
 
