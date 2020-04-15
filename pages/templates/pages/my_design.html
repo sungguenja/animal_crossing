@@ -3,21 +3,119 @@
 {% block content %}
 <div class="row">
 <a href="/wiki_like/my_design/affect/" class="col-3"><button>디자인<br>자랑하기</button></a>
+<div class="col-9"></div>
 <hr class="d-none d-md-block col-12">
-{% for design in pic %} 
-<div class="d-none d-md-block col-3 bg-success text-light">
-  {{ design.title }}<br>
-  {{ design.category }}<br>
-  {{ design.created_at }}
+<nav class='col-12'>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="nav-home" aria-selected="true">전체</a>
+    <a class="nav-item nav-link" id="nav-toptop-tab" data-toggle="tab" href="#toptop" role="tab" aria-controls="nav-profile" aria-selected="false">상의</a>
+    <a class="nav-item nav-link" id="nav-onepiece-tab" data-toggle="tab" href="#onepiece" role="tab" aria-controls="nav-contact" aria-selected="false">원피스</a>
+    <a class="nav-item nav-link" id="nav-cat-tab" data-toggle="tab" href="#hat" role="tab" aria-controls="nav-contact" aria-selected="false">모자</a>
+    <a class="nav-item nav-link" id="nav-no_cat-tab" data-toggle="tab" href="#no_cat" role="tab" aria-controls="nav-contact" aria-selected="false">분류안함</a>
+  </div>
+</nav>
+
+<div class="tab-content col-12" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="nav-all-tab">
+    {% for design in pic %}
+    <div class="row">
+      <div class="d-none d-md-block col-3 bg-success text-light">
+        {{ design.title }}<br>
+        {{ design.category }}<br>
+        {{ design.created_at }}
+      </div>
+      <div class="d-none d-md-block col-9">
+        <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
+      </div>
+    </div>
+    <hr class="d-none d-md-block col-12">
+    {% endfor %}
+    {% for design in pic %}
+    <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
+    <hr class="d-block d-md-none col-12">
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="toptop" role="tabpanel" aria-labelledby="nav-toptop-tab">
+    {% for design in top %}
+    <div class="row">
+      <div class="d-none d-md-block col-3 bg-success text-light">
+        {{ design.title }}<br>
+        {{ design.category }}<br>
+        {{ design.created_at }}
+      </div>
+      <div class="d-none d-md-block col-9">
+        <img src="{{ design.design_img.url }}" class="img-responsive" width="100%">
+      </div>
+    </div>
+    <hr class="d-none d-md-block col-12">
+    {% endfor %}
+    {% for design in top %}
+    <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
+    <hr class="d-block d-md-none col-12">
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="onepiece" role="tabpanel" aria-labelledby="nav-onepiece-tab">
+    {% for design in onepiece %}
+    <div class="row">
+      <div class="d-none d-md-block col-3 bg-success text-light">
+        {{ design.title }}<br>
+        {{ design.category }}<br>
+        {{ design.created_at }}
+      </div>
+      <div class="d-none d-md-block col-9">
+        <img src="{{ design.design_img.url }}" class="img-responsive" width="100%">
+      </div>
+    </div>
+    <hr class="d-none d-md-block col-12">
+    {% endfor %}
+    {% for design in onepiece %}
+    <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
+    <hr class="d-block d-md-none col-12">
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="hat" role="tabpanel" aria-labelledby="nav-hat-tab">
+    {% for design in hat %}
+    <div class="row">
+      <div class="d-none d-md-block col-3 bg-success text-light">
+        {{ design.title }}<br>
+        {{ design.category }}<br>
+        {{ design.created_at }}
+      </div>
+      <div class="d-none d-md-block col-9">
+        <img src="{{ design.design_img.url }}" class="img-responsive" width="100%">
+      </div>
+    </div>
+    <hr class="d-none d-md-block col-12">
+    {% endfor %}
+    {% for design in hat %}
+    <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
+    <hr class="d-block d-md-none col-12">
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade col-12" id="no_cat" role="tabpanel" aria-labelledby="nav-no_cat-tab">
+    {% for design in no_cat %}
+    <div class="row">
+      <div class="d-none d-md-block col-3 bg-success text-light">
+        {{ design.title }}<br>
+        {{ design.category }}<br>
+        {{ design.created_at }}
+      </div>
+      <div class="d-none d-md-block col-9">
+        <img src="{{ design.design_img.url }}" class="img-responsive" width="100%">
+      </div>
+    </div>
+    <hr class="d-none d-md-block col-12">
+    {% endfor %}
+    {% for design in no_cat %}
+    <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
+    <hr class="d-block d-md-none col-12">
+    {% endfor %}
+  </div>
+
 </div>
-<div class="d-none d-md-block col-9">
-    <img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" height="400">
 </div>
-<hr class="d-none d-md-block col-12">
-{% endfor %}
-{% for design in pic %}
-<div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
-<hr class="d-block d-md-none col-12">
-{% endfor %}
-</div> 
 {% endblock %}

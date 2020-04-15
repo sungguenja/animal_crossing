@@ -29,3 +29,15 @@ I crawl img in wiki but wiki's image adress change
 So I will fix it but...... I have no time in these days T.T
 
 I try it to fix
+
+## 0414
+
+Reconnect all image
+
+and change some UI for villagers
+
+## 0415
+
+Redesign mydesign part
+
+now we can choose cateogry and can see what category u want
