@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <h2 class='col-12'>LOGIN</h2>
+  <form class='col-12 'action="" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">ID</label>
+        <input class="form-control" id="{{ form.username.id_for_label }}" maxlength="15" name="{{ form.username.html_name }}" type="text" />
+      </div>
+      <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">PASSWORD</label>
+        <input class="form-control" id="{{ form.password.id_for_label }}" maxlength="120" name="{{ form.password.html_name }}" type="password" />
+      </div>
+      <input type="submit" class="save btn btn-success" value="로그인">
+      <a href="{% url 'pages:home' %}">
+        <button type="button" class="btn btn-danger">취소</button>
+      </a>
+      <input type="hidden" name="next" value="">
+  </form>
+</div>
+{% endblock %}

@@ -3,17 +3,16 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from . import views
 
+app_name = 'pages'
 urlpatterns = [
-    path('', views.home),
-    path('nook/', views.nook),
-    path('villagers/', views.villagers),
-    path('arr/', views.arr),
-    path('arr/bugs/', views.all_bug),
-    path('arr/fishes/', views.all_fish),
-    path('my_design/', views.my_design),
-    path('my_design/your_design/', views.your_design),
-    path('my_design/affect/', views.your_design),
-    path('my_design/success/', views.success),
+    path('', views.home, name='home'),
+    path('nook/', views.nook, name='nook'),
+    path('villagers/', views.villagers, name='villagers'),
+    path('arr/', views.arr, name='arr'),
+    path('arr/bugs/', views.all_bug, name='all_bug'),
+    path('arr/fishes/', views.all_fish, name='all_fish'),
+    path('my_design/', views.my_design, name='my_design'),
+    path('my_design/affect/', views.your_design, name='your_design'),
 ]
 
 if settings.DEBUG: 

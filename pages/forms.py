@@ -12,5 +12,5 @@ class Design_Form(forms.ModelForm):
         }
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-control', 'placeholder': '제목을 적어주세요 100자까지가능합니다.'}),
-            'category': forms.Select(choices=[['분류X','분류X'],['상의','상의'],['원피스','원피스'],['모자','모자']],attrs={'class':'btn btn-outline-dark dropdown-toggle'})
+            'category': forms.Select(choices=[['분류X','분류X'],['상의','상의'],['원피스','원피스'],['모자','모자']],attrs={'class':'btn btn-outline-dark dropdown-toggle col-12'})
         }

@@ -334,18 +334,17 @@ def my_design(request):
         return render(request, 'pages/my_design.html', context)
 
 def your_design(request):
-    if request.method == 'POST':
-        form = Design_Form(request.POST, request.FILES, request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('/wiki_like/my_design/')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = Design_Form(request.POST, request.FILES, request.POST)
+            
+            if form.is_valid():
+                article = form.save(commit=False)
+                article.user = request.user
+                article.save()
+                return redirect('pages:my_design')
+        else:
+            form = Design_Form()
+        return render(request, 'pages/affect.html', {'form': form})
     else:
-        form = Design_Form()
-    return render(request, 'pages/affect.html', {'form': form})
-
-def affect(request):
-    return render(request,'pages/affect.html')
-
-def success(request): 
-    return HttpResponse('successfully uploaded') 
+        return redirect('pages:my_design')

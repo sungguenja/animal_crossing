@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row">
-<a href="/wiki_like/my_design/affect/" class="col-3"><button>디자인<br>자랑하기</button></a>
+<a href="/wiki_like/my_design/affect/" class="col-3"><button class='btn btn-info'>디자인<br>자랑하기</button></a>
 <div class="col-9"></div>
 <hr class="d-none d-md-block col-12">
 <nav class='col-12'>
@@ -22,7 +22,8 @@
       <div class="d-none d-md-block col-3 bg-success text-light">
         {{ design.title }}<br>
         {{ design.category }}<br>
-        {{ design.created_at }}
+        {{ design.created_at }}<br>
+        <a href='#' class='text-decoration-none text-light'>{{ design.user }}</a>
       </div>
       <div class="d-none d-md-block col-9">
         <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
@@ -96,7 +97,7 @@
     {% endfor %}
   </div>
 
-  <div class="tab-pane fade col-12" id="no_cat" role="tabpanel" aria-labelledby="nav-no_cat-tab">
+  <div class="tab-pane fade" id="no_cat" role="tabpanel" aria-labelledby="nav-no_cat-tab">
     {% for design in no_cat %}
     <div class="row">
       <div class="d-none d-md-block col-3 bg-success text-light">

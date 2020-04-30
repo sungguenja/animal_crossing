@@ -8,7 +8,7 @@
 >
 > I wish it will be gone good....
 >
-> [if you want to see my page](https://www.pythonanywhere.com/user/bluemen01/)
+> [if you want to see my page](https://bluemen01.pythonanywhere.com/wiki_like/)
 
 ## 0405
 
@@ -41,3 +41,11 @@ and change some UI for villagers
 Redesign mydesign part
 
 now we can choose cateogry and can see what category u want
+
+## 0430
+
+I want to create achievements
+
+but I'm so noob I can make that now
+
+but I will make that motherXXXXXX in this week

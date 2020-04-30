@@ -10,25 +10,34 @@
 </head>
 <body>
   <nav class="navco navbar navbar-expand-lg navbar-light sticky-top">
-    <a class="navbar-brand" href="/wiki_like/"><img src='{% static "logo.png" %}' height="50"></a>
+    <a class="navbar-brand" href="{% url 'pages:home' %}"><img src='{% static "logo.png" %}' height="50"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/wiki_like/nook/">마일리지<span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="{% url 'pages:nook' %}">마일리지<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/wiki_like/arr/">도감</a>
+          <a class="nav-link text-light" href="{% url 'pages:arr' %}">도감</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/wiki_like/villagers/">주민</a>
+          <a class="nav-link text-light" href="{% url 'pages:villagers' %}">주민</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/wiki_like/my_design/">마이 디자인</a>
+          <a class="nav-link text-light" href="{% url 'pages:my_design' %}">마이 디자인</a>
         </li>
       </ul>
+      <div>
+        {% if request.user.is_authenticated %}
+        <a class='text-decoration-none text-light' href='{% url "accounts:profile" request.user%}'>내 프로필</a>
+        <a class='text-decoration-none text-light' href='{% url "accounts:logout" %}'>로그아웃하기</a>
+        {% else %}
+        <a class='text-decoration-none text-light' href='{% url "accounts:signup" %}'>회원가입하기</a>
+        <a class='text-decoration-none text-light' href='{% url "accounts:login" %}'>로그인하기</a>
+        {% endif %}
+      </div>
     </div>
   </nav>
   <div class="container">
