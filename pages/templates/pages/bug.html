@@ -3,6 +3,13 @@
 
 {% block content %}
 <div class="row">
+  {% if messages %}
+	  {% for message in messages %}
+      <div class="alert alert-danger col-12" role="alert">
+        {{ message.message }}
+      </div>
+	  {% endfor %}
+  {% endif %}
   <div class="col-12">
     <table class="d-none d-md-block table table-hover">
         <thead>
@@ -13,17 +20,27 @@
             <th scope="col">출몰시간</th>
             <th scope="col">출몰장소</th>
             <th scope="col">가격</th>
+            {% if request.user.is_authenticated %}
+            <th scope="col">잡았다!</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
-          {% for dt in now %}
+          {% for dt in bugs %}
           <tr>
-            <th scope="row">{{ dt.0 }}</th>
-            <td><img src="{% static 'bug/' %}{{dt.1}}" width='40' height='40'></td>
-            <td>{{ dt.2 }}</td>
-            <td>{{ dt.3 }}</td>
-            <td>{{ dt.4 }}</td>
-            <td>{{ dt.5 }}</td>
+            <th scope="row">{{ dt.name }}</th>
+            <td><img src="{% static 'bug/' %}{{dt.id}}.png" width='40' height='40'></td>
+            <td>{{ dt.date }}</td>
+            <td>{{ dt.time }}</td>
+            <td>{{ dt.where }}</td>
+            <td>{{ dt.bell }}</td>
+            {% if request.user.is_authenticated %}
+            {% if request.user in dt.catch_user.all %}
+            <th scope="col"><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/doodle/20/000000/butterfly-net.png"/></a></th>
+            {% else %}
+            <th scope="col"><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/dotty/20/000000/butterfly-net.png"/></a></th>
+            {% endif %}
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
@@ -31,15 +48,25 @@
     <div class="row">
       <div class="d-block d-md-none">
         <div class="row">
-        {% for dt in now %}
-        <div class="col-2 bg-white">{{ dt.0 }}</div>
-        <div class="col-2"><img src="{% static 'bug/' %}{{dt.1}}" height='50'></div>
+        {% for dt in bugs %}
+        <div class="col-2 bg-white">{{ dt.name }}</div>
+        <div class="col-2"><img src="{% static 'bug/' %}{{dt.id}}.png" height='50'></div>
         <div class="col-8">
           <div class="row">
-            <div class="col-6">출몰기간<br>{{ dt.2 }}</div>
-            <div class="col-6">출몰시간<br>{{ dt.3 }}</div>
-            <div class="col-6">장소<br>{{ dt.4 }}</div>
-            <div class="col-6">가격<br>{{ dt.5 }}</div>
+            <div class="col-6">출몰기간<br>{{ dt.date }}</div>
+            <div class="col-6">출몰시간<br>{{ dt.time }}</div>
+            {% if request.user.is_authenticated %}
+            <div class="col-4">장소<br>{{ dt.where }}</div>
+            <div class="col-4">가격<br>{{ dt.bell }}</div>
+            {% if request.user in dt.catch_user.all %}
+            <div scope="col-4">잡았나?<br><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/doodle/20/000000/butterfly-net.png"/></a></div>
+            {% else %}
+            <div scope="col-4">잡았나?<br><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/dotty/20/000000/butterfly-net.png"/></a></div>
+            {% endif %}
+            {% else %}
+            <div class="col-6">장소<br>{{ dt.where }}</div>
+            <div class="col-6">가격<br>{{ dt.bell }}</div>
+            {% endif %}
           </div>
         </div>
         <hr class="col-12 bg-white">

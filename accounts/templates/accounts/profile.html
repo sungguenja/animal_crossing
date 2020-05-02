@@ -1,5 +1,207 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+<div class="row">
+<h2 class="col-12">{% if person.id != request.user.id %}{{ person.nickname }}{% else %}{{ request.user }}님 환영합니다.{% endif %}</h2>
+<hr class="col-12">
+{% if request.user != person %}
+<div class="col-12">
+    {% if request.user in person.followers.all %}
+    <a href='{% url "accounts:follow" person.username %}'>팔로우 취소</a>
+    {% else %}
+    <a href='{% url "accounts:follow" person.username %}'>팔로우 하기</a>
+    {% endif %}
+</div>
+{% endif %}
+<h2 class="col-12">{% if person.id != request.user.id %}{{ person.nickname }}님의 진행상황{% else %}{{ request.user }}님의 진행상황.{% endif %}</h2>
+<h3 class="col-12">벌레 도감 달성률</h3>
+<div class="col-12">
+<div class="progress">
+    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: {{ bug_count }}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{{ bug_count }} %</div>
+</div>
+</div>
+<div class="col-12">
+<h3 class="col-12">생선 도감 달성률</h3>
+<div class="progress">
+    <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: {{ fish_count }}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">{{ fish_count }}%</div>
+</div>
+</div>
+<h4 class="col-12">주민들</h4>
+{% for dt in person.live_villager.all %}
+<div class="card d-none d-md-block col-md-4 col-lg-3 bg-transparent text-dark" style="width: 18rem;">
+  <button type="button" class="btn col-12" data-toggle="modal" data-target="#{{ dt.kr_name }}">
+    <img src="{% static 'villagers/villagers/' %}{{ dt.kr_name }}.png" class="card-img-top" alt="{{ dt.6 }}" height="400">
+  </button>
+  <div class="card-body row">
+    {% if request.user in dt.like_user.all %}
+    <a href="{% url 'pages:like' dt.id %}" class="col-3">
+      <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+    </a>
+    {% else %}
+    <a href="{% url 'pages:like' dt.id %}" class='col-3'>
+      <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+    </a>
+    {% endif %}
+    <p class="card-text col-6 text-center">{{ dt.kr_name }}</p>
+    {% if request.user in dt.live_with.all %}
+    <a href='{% url "pages:live" dt.id %}' class="col-3">
+      <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+    </a>
+    {% else %}
+    <a href='{% url "pages:live" dt.id %}' class='col-3'>
+      <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+    </a>
+    {% endif %}
+  </div>
+</div>
 
+<div class="modal fade" id="{{ dt.kr_name }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ dt.kr_name }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <div class="col-6">
+          <p>이름: {{ dt.kr_name }}</p>
+          <p>일본이름: {{ dt.jp_name }}</p>
+          <p>영어이름: {{ dt.en_name }}</p>
+          <p>성별: {{ dt.sex }}</p>
+          <p>생일: {{ dt.birthday }}</p>
+          <p>성격: {{ dt.character }}</p>
+          <p>종: {{ dt.species }}</p>
+          {% if request.user in dt.like_user.all %}
+          <p>마음에 드시나요?:<a href="{% url 'pages:like' dt.id %}">
+            <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+          </a></p>
+          {% else %}
+          <p>마음에 드시나요?:<a href="{% url 'pages:like' dt.id %}">
+            <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+          </a></p>
+          {% endif %}
+          {% if request.user in dt.live_with.all %}
+          <p>이웃이신가요?<a href='{% url "pages:live" dt.id %}'>
+            <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+          </a></p>
+          {% else %}
+          <p>이웃이신가요?<a href='{% url "pages:live" dt.id %}'>
+            <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+          </a></p>
+          {% endif %}
+          {% if dt.0 == '밥' %}
+          <a href="https://www.youtube.com/watch?v=251l1KKiCrw" target="_blank">밥!</a>
+          {% elif dt.0 == '충성' %}
+          <a href="https://www.youtube.com/watch?v=r1Nt6xYPgBA" target="_blank">^^7</a>
+          {% elif dt.0 == '잭슨' %}
+          <b>나는 있다 ㅎㅎㅎ</b>
+          {% elif dt.0 == '모니카'%}
+          <b>소니아같아.....</b>
+          {% elif dt.0 == '쭈니' %}
+          <a href="https://www.youtube.com/watch?v=fq_-i293hl4" target="_blank">커여워</a>
+          {% elif dt.0 == '에바' %}
+          <a href="https://www.google.com/search?q=%EC%82%BC%EC%A7%84%EC%97%90%EB%B0%94&sxsrf=ALeKk00h3P7MK_YOPbpLmWfTrN9mEdc9Zg:1586872445714&tbm=isch&source=iu&ictx=1&fir=zfnIq8V7axqqMM%253A%252C49DX5Ul9ly3rZM%252C_&vet=1&usg=AI4_-kQ0OGcxJO2WcEXK_Fh-i6oCei2DkQ&sa=X&ved=2ahUKEwjMzLjDiOjoAhWPOnAKHZ7-BjcQ9QEwAHoECAoQFA#imgrc=zfnIq8V7axqqMM:" target="_blank">삼진 에바</a>
+          {% elif dt.0 == '헐크' %}
+          <button class="btn btn-success">헐크</button>
+          {% elif dt.0 == '슈베르트' %}
+          <a href="https://youtu.be/jA8v5y_gcvA" target="_blank">아버지 뒤에 마왕이 보여요</a>
+          {% elif dt.0 == '탁호' %}
+          <a href="https://www.google.com/maps/d/u/0/viewer?mid=1EdVUZBtD6W4G0QMMXKVoLU-MzmCM3WmE&hl=ko&ll=37.257917144210296%2C127.05534659116995&z=13" target="_blank">언제나 맛있지</a>
+          {% elif dt.0 == '쪼끼' %}
+          <a href="https://www.youtube.com/watch?v=rneay0FfqFA" target="_blank">까마귀</a>
+          {% elif dt.0 == '피엘' %}
+          <a href="https://www.youtube.com/watch?v=hpXD2hwHjC8" target="_blank">그때는 조커가 되는거야!</a>
+          {% elif dt.0 == '티미' %}
+          <a href="https://www.youtube.com/watch?v=18P30OS-l7Y" target="_blank">티미티미티미 터너</a>
+          {% elif dt.0 == '스트로베리' %}
+          <a href="https://www.youtube.com/watch?v=Yi89dLf9MUk" target="_blank">딸기가 빠졌잖아</a>
+          {% endif %}
+        </div>
+        <img src="{% static 'villagers/villagers/' %}{{ dt.kr_name }}.png" class="card-img-top col-6" alt="{{ dt.6 }}" height="400">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<table class="d-block d-md-none table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">이름</th>
+        <th scope="col">모습</th>
+        <th scope="col">생일</th>
+        <th scope="col">성격</th>
+        <th scope="col">우리주민</th>
+        <th scope="col">like</th>
+        <th scope="col">상세정보</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dt in person.live_villager.all %}
+      <tr>
+        <th scope="row">{{ dt.kr_name }}</th>
+        <td><img src="{% static 'villagers/villagers/' %}{{ dt.kr_name }}.png" alt="{{ dt.6 }}" height="20"></td>
+        <td>{{ dt.birthday }}</td>
+        <td>{{ dt.character }}</td>
+        {% if request.user in dt.like_user.all %}
+          <td>:<a href="{% url 'pages:like' dt.id %}">
+            <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+          </a></td>
+        {% else %}
+          <td><a href="{% url 'pages:like' dt.id %}">
+            <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+          </a></td>
+        {% endif %}
+        {% if request.user in dt.live_with.all %}
+          <td><a href='{% url "pages:live" dt.id %}'>
+            <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+          </a></td>
+        {% else %}
+          <td><a href='{% url "pages:live" dt.id %}'>
+            <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+          </a></td>
+        {% endif %}
+        <td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#{{ dt.kr_name }}">click
+        </button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<hr class="col-12">
+<h2 class="col-12">{{ person.username }}이 쓴 글 들</h2>
+{% for article in person.design_set.all %}
+<div class="col-3">
+  <ul>
+    <li>제목: {{ article.title }}</li>
+    <li>내용: {{ article.content }}</li>
+    <li>작성한 날짜와 수정한 날짜: {{ article.created_at }}, {{ article.updated_at }}</li>
+  </ul>
+</div>
+<div class="col-9">
+  <img src="{{ article.design_img.url }}" class="img-responsive" width="100%" height='400'>
+</div>
+<hr class="col-12">
+{% endfor %}
+<hr class="col-12">
+<h2 class="col-12">{{ person.username }} 이 좋아요를 누른 글</h2>
+{% for article in person.like_design.all %}
+<div class="col-3">
+    <ul>
+      <li>제목: {{ article.title }}</li>
+      <li>내용: {{ article.content }}</li>
+      <li>작성한 날짜와 수정한 날짜: {{ article.created_at }}, {{ article.updated_at }}</li>
+    </ul>
+  </div>
+  <div class="col-9">
+    <img src="{{ article.design_img.url }}" class="img-responsive" width="100%" height='400'>
+</div>
+<hr class="col-12">
+{% endfor %}
+</div>
 {% endblock %}

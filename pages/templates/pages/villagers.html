@@ -2,34 +2,90 @@
 {% load static %}
 
 {% block content %}
+{% if messages %}
+	{% for message in messages %}
+  <div class="alert alert-danger col-12" role="alert">
+    {{ message.message }}
+  </div>
+	{% endfor %}
+{% endif %}
 <div class="row">
-{% for dt in now %}
-<div class="card col-6 col-md-4 col-lg-3 bg-transparent text-dark" style="width: 18rem;">
-  <button type="button" class="btn" data-toggle="modal" data-target="#{{ dt.0 }}">
-    <img src="{% static 'villagers/villagers/' %}{{ dt.6 }}" class="card-img-top" alt="{{ dt.6 }}" height="400">
+  <div class="btn-group dropright col-6 col-md-4 col-lg-3">
+    <button class="btn btn-warning dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      동물별로 보기
+    </button>
+    <div class="dropdown-menu col-10" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="{% url 'pages:villagers'%}">모두</a>
+      {% for now in sp %}
+      <a class="dropdown-item" href="{% url 'pages:spec' now %}">{{ now }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <hr class="col-12">
+{% for dt in neighbors %}
+<div class="card col-6 col-md-4 col-lg-3 bg-transparent text-dark d-none d-md-block" style="width: 18rem;">
+  <button type="button" class="btn col-12" data-toggle="modal" data-target="#{{ dt.kr_name }}">
+    <img src="{% static 'villagers/villagers/' %}{{ dt.kr_name }}.png" class="card-img-top" alt="{{ dt.6 }}" height="400">
   </button>
-  <div class="card-body row text-center">
-    <p class="card-text col-12">{{ dt.0 }}</p>
+  <div class="card-body row">
+    {% if request.user in dt.like_user.all %}
+    <a href="{% url 'pages:like' dt.id %}" class="col-3">
+      <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+    </a>
+    {% else %}
+    <a href="{% url 'pages:like' dt.id %}" class='col-3'>
+      <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+    </a>
+    {% endif %}
+    <p class="card-text col-6 text-center">{{ dt.kr_name }}</p>
+    {% if request.user in dt.live_with.all %}
+    <a href='{% url "pages:live" dt.id %}' class="col-3">
+      <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+    </a>
+    {% else %}
+    <a href='{% url "pages:live" dt.id %}' class='col-3'>
+      <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+    </a>
+    {% endif %}
   </div>
 </div>
 
-<div class="modal fade" id="{{ dt.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{ dt.kr_name }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ dt.0 }}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{ dt.kr_name }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body row">
         <div class="col-6">
-          <p>이름: {{ dt.0 }}</p>
-          <p>일본이름: {{ dt.1 }}</p>
-          <p>영어이름: {{ dt.2 }}</p>
-          <p>성별: {{ dt.3 }}</p>
-          <p>생일: {{ dt.4 }}</p>
-          <p>성격: {{ dt.5 }}</p>
+          <p>이름: {{ dt.kr_name }}</p>
+          <p>일본이름: {{ dt.jp_name }}</p>
+          <p>영어이름: {{ dt.en_name }}</p>
+          <p>성별: {{ dt.sex }}</p>
+          <p>생일: {{ dt.birthday }}</p>
+          <p>성격: {{ dt.character }}</p>
+          <p>종: {{ dt.species }}</p>
+          {% if request.user in dt.like_user.all %}
+          <p>마음에 드시나요?:<a href="{% url 'pages:like' dt.id %}">
+            <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+          </a></p>
+          {% else %}
+          <p>마음에 드시나요?:<a href="{% url 'pages:like' dt.id %}">
+            <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+          </a></p>
+          {% endif %}
+          {% if request.user in dt.live_with.all %}
+          <p>이웃이신가요?<a href='{% url "pages:live" dt.id %}'>
+            <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+          </a></p>
+          {% else %}
+          <p>이웃이신가요?<a href='{% url "pages:live" dt.id %}'>
+            <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+          </a></p>
+          {% endif %}
           {% if dt.0 == '밥' %}
           <a href="https://www.youtube.com/watch?v=251l1KKiCrw" target="_blank">밥!</a>
           {% elif dt.0 == '충성' %}
@@ -58,7 +114,7 @@
           <a href="https://www.youtube.com/watch?v=Yi89dLf9MUk" target="_blank">딸기가 빠졌잖아</a>
           {% endif %}
         </div>
-        <img src="{% static 'villagers/villagers/' %}{{ dt.6 }}" class="card-img-top col-6" alt="{{ dt.6 }}" height="400">
+        <img src="{% static 'villagers/villagers/' %}{{ dt.kr_name }}.png" class="card-img-top col-6" alt="{{ dt.6 }}" height="400">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -67,5 +123,48 @@
   </div>
 </div>
 {% endfor %}
+<table class="d-block d-md-none table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">이름</th>
+      <th scope="col">모습</th>
+      <th scope="col">생일</th>
+      <th scope="col">성격</th>
+      <th scope="col">우리주민</th>
+      <th scope="col">like</th>
+      <th scope="col">상세정보</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dt in neighbors %}
+    <tr>
+      <th scope="row">{{ dt.kr_name }}</th>
+      <td><img src="{% static 'villagers/villagers/' %}{{ dt.kr_name }}.png" alt="{{ dt.6 }}" height="20"></td>
+      <td>{{ dt.birthday }}</td>
+      <td>{{ dt.character }}</td>
+      {% if request.user in dt.like_user.all %}
+        <td>:<a href="{% url 'pages:like' dt.id %}">
+          <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+        </a></td>
+      {% else %}
+        <td><a href="{% url 'pages:like' dt.id %}">
+          <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+        </a></td>
+      {% endif %}
+      {% if request.user in dt.live_with.all %}
+        <td><a href='{% url "pages:live" dt.id %}'>
+          <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+        </a></td>
+      {% else %}
+        <td><a href='{% url "pages:live" dt.id %}'>
+          <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+        </a></td>
+      {% endif %}
+      <td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#{{ dt.kr_name }}">click
+      </button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock %}

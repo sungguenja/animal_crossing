@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row">
   <div class="d-none d-md-block card offset-1 col-3 forcard" style="width: 18rem;">
-    <a href="/wiki_like/nook/"><img src="{% static 'mile.jpg' %}" onmouseout='this.src="{% static 'mile.jpg' %}"' onmouseover="this.src='{% static "mileover.png" %}'" class="card-img-top" alt="..." height="300"></a>
+    <a href="{% url 'pages:nook' %}"><img src="{% static 'mile.jpg' %}" onmouseout='this.src="{% static 'mile.jpg' %}"' onmouseover="this.src='{% static "mileover.png" %}'" class="card-img-top" alt="..." height="300"></a>
     <div class="card-body">
       <p class="card-text">너굴 마일리지에 대해 알아봅시다</p>
     </div>
@@ -13,13 +13,13 @@
     <source src="{% static 'BGM.mp3' %}" type="audio/mp3">
 </audio>
   <div class="d-none d-md-block card col-3 bcard" style="width: 18rem;">
-    <a href="/wiki_like/arr/"><img src="{% static 'list.png' %}" class="card-img-top" alt="..." height="300"></a>
+    <a href="{% url 'pages:arr' %}"><img src="{% static 'list.png' %}" class="card-img-top" alt="..." height="300"></a>
     <div class="card-body">
       <p class="card-text">도감 리스트를 보여드립니다</p>
     </div>
   </div>
   <div class="d-none d-md-block card col-3 bcard" style="width: 18rem;">
-    <a href="/wiki_like/villagers/"><img src="{% static 'neigbor.png' %}" onmouseout='this.src="{% static 'neigbor.png' %}"' onmouseover="this.src='{% static "neighborover.png" %}'" class="card-img-top" alt="..." height='300'></a>
+    <a href="{% url 'pages:vil_ran' %}"><img src="{% static 'neigbor.png' %}" onmouseout='this.src="{% static 'neigbor.png' %}"' onmouseover="this.src='{% static "neighborover.png" %}'" class="card-img-top" alt="..." height='300'></a>
     <div class="card-body">
       <p class="card-text">주민 리스트에 대해 알려드립니다</p>
     </div>
@@ -51,17 +51,17 @@
     </a>
   </div>
   <div class="d-none d-md-block card col-3 forcard" style="width: 18rem;">
-    <a href="/wiki_like/my_design/"><img src="{% static 'design.png' %}" onmouseout='this.src="{% static 'design.png' %}"' onmouseover="this.src='{% static "designover.png" %}'" class="card-img-top" alt="..." height='300'></a>
+    <a href="{% url 'pages:my_design' %}"><img src="{% static 'design.png' %}" onmouseout='this.src="{% static 'design.png' %}"' onmouseover="this.src='{% static "designover.png" %}'" class="card-img-top" alt="..." height='300'></a>
     <div class="card-body">
       <p class="card-text">마이 디자인을 자랑해봐요!</p>
     </div>
   </div>
   <h1 class="d-block d-md-none col-12 text-center"id="clock" style="color:gray;">00:00</h1>
   <hr class="d-block d-md-none col-12">
-  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="/wiki_like/nook/"><img src="{% static 'nook.png' %}" alt="..." height="200"><br>Nook Miles</a></div>
-  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="/wiki_like/arr/"><img src="{% static 'list_mini.png' %}" alt="..." height="200"><br>도감</a></div>
-  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="/wiki_like/villagers/"><img src="{% static 'freind.png' %}" alt="..." height="200"><br>이웃들</a></div>
-  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="/wiki_like/my_design/"><img src="{% static 'design.png' %}" alt="..." height="200"><br>My design</a></div>
+  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:nook' %}"><img src="{% static 'nook.png' %}" alt="..." height="200"><br>Nook Miles</a></div>
+  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:arr' %}"><img src="{% static 'list_mini.png' %}" alt="..." height="200"><br>도감</a></div>
+  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:vil_ran' %}"><img src="{% static 'freind.png' %}" alt="..." height="200"><br>이웃들</a></div>
+  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:my_design' %}"><img src="{% static 'design.png' %}" alt="..." height="200"><br>My design</a></div>
 </div>
 <script>
   var clockTarget = document.getElementById("clock");

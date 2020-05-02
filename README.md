@@ -49,3 +49,9 @@ I want to create achievements
 but I'm so noob I can make that now
 
 but I will make that motherXXXXXX in this week
+
+## 0502
+
+add many function
+
+really many thing

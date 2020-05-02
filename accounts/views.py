@@ -4,6 +4,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 def signup(request):
     if request.user.is_authenticated:
@@ -38,10 +39,17 @@ def logout(request):
     return redirect('pages:home')
 
 @login_required
-def profile(request,username):
-    person = get_object_or_404(get_user_model(), username=username)
+def profile(request,nickname):
+    if nickname == '익명':
+        messages.info(request,'죄송합니다 익명의 유저는 볼 수 없습니다')
+        return redirect('pages:my_design')
+    person = get_object_or_404(get_user_model(), nickname=nickname)
+    bug_count = (int(person.catch_bug.count())/80)*100
+    fish_count = (int(person.catch_fish.count())/80)*100
     context = {
-        'person': person
+        'person': person,
+        'bug_count': bug_count,
+        'fish_count': fish_count
     }
     return render(request,'accounts/profile.html', context)
 
@@ -54,3 +62,18 @@ def follow(request,username):
         else:
             person.followers.add(request.user)
     return redirect('accounts:profile', person.username)
+
+@login_required
+def my_profile(request,user_id):
+    if request.user.id != user_id:
+        messages.info(request,'남의 프로필은 보실 수 없습니다')
+        return redirect('pages:home')
+    person = get_object_or_404(get_user_model(), id=user_id)
+    bug_count = person.catch_bug.count()
+    fish_count = person.catch_fish.count()
+    context = {
+        'person': person,
+        'bug_count': bug_count,
+        'fish_count': fish_count
+    }
+    return render(request,'accounts/profile.html', context)

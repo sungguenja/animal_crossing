@@ -2,7 +2,14 @@
 
 {% block content %}
 <div class="row">
-<a href="/wiki_like/my_design/affect/" class="col-3"><button class='btn btn-info'>디자인<br>자랑하기</button></a>
+{% if messages %}
+	{% for message in messages %}
+  <div class="alert alert-danger col-12" role="alert">
+    {{ message.message }}
+  </div>
+	{% endfor %}
+{% endif %}
+<a href="/wiki_like/my_design/affect/" class="col-2"><button class='btn btn-info col-12'>디자인<br>자랑하기</button></a>
 <div class="col-9"></div>
 <hr class="d-none d-md-block col-12">
 <nav class='col-12'>
@@ -23,7 +30,14 @@
         {{ design.title }}<br>
         {{ design.category }}<br>
         {{ design.created_at }}<br>
-        <a href='#' class='text-decoration-none text-light'>{{ design.user }}</a>
+        <a href='{% url "accounts:profile" design.user.nickname %}' class='text-decoration-none text-light'>{{ design.user.nickname }}</a>
+        <br><a href="{% url 'pages:like_design' design.id %}" class='text-decoration-none text-light'>
+          {% if request.user in design.like_users.all %}
+          <img src="https://img.icons8.com/material-rounded/100/000000/thumb-up.png"/>
+          {% else %}
+          <img src="https://img.icons8.com/material-outlined/100/000000/thumb-up.png"/>
+          {% endif %}
+        </a>
       </div>
       <div class="d-none d-md-block col-9">
         <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
@@ -43,7 +57,15 @@
       <div class="d-none d-md-block col-3 bg-success text-light">
         {{ design.title }}<br>
         {{ design.category }}<br>
-        {{ design.created_at }}
+        {{ design.created_at }}<br>
+        <a href='{% url "accounts:profile" design.user.nickname %}' class='text-decoration-none text-light'>{{ design.user.nickname }}</a>
+        <br><a href="{% url 'pages:like_design' design.id %}" class='text-decoration-none text-light'>
+          {% if request.user in design.like_users.all %}
+          <img src="https://img.icons8.com/material-rounded/100/000000/thumb-up.png"/>
+          {% else %}
+          <img src="https://img.icons8.com/material-outlined/100/000000/thumb-up.png"/>
+          {% endif %}
+        </a>
       </div>
       <div class="d-none d-md-block col-9">
         <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
@@ -63,7 +85,15 @@
       <div class="d-none d-md-block col-3 bg-success text-light">
         {{ design.title }}<br>
         {{ design.category }}<br>
-        {{ design.created_at }}
+        {{ design.created_at }}<br>
+        <a href='{% url "accounts:profile" design.user.nickname %}' class='text-decoration-none text-light'>{{ design.user.nickname }}</a>
+        <br><a href="{% url 'pages:like_design' design.id %}" class='text-decoration-none text-light'>
+          {% if request.user in design.like_users.all %}
+          <img src="https://img.icons8.com/material-rounded/100/000000/thumb-up.png"/>
+          {% else %}
+          <img src="https://img.icons8.com/material-outlined/100/000000/thumb-up.png"/>
+          {% endif %}
+        </a>
       </div>
       <div class="d-none d-md-block col-9">
         <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
@@ -83,7 +113,15 @@
       <div class="d-none d-md-block col-3 bg-success text-light">
         {{ design.title }}<br>
         {{ design.category }}<br>
-        {{ design.created_at }}
+        {{ design.created_at }}<br>
+        <a href='{% url "accounts:profile" design.user.nickname %}' class='text-decoration-none text-light'>{{ design.user.nickname }}</a>
+        <br><a href="{% url 'pages:like_design' design.id %}" class='text-decoration-none text-light'>
+          {% if request.user in design.like_users.all %}
+          <img src="https://img.icons8.com/material-rounded/100/000000/thumb-up.png"/>
+          {% else %}
+          <img src="https://img.icons8.com/material-outlined/100/000000/thumb-up.png"/>
+          {% endif %}
+        </a>
       </div>
       <div class="d-none d-md-block col-9">
         <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
@@ -103,7 +141,15 @@
       <div class="d-none d-md-block col-3 bg-success text-light">
         {{ design.title }}<br>
         {{ design.category }}<br>
-        {{ design.created_at }}
+        {{ design.created_at }}<br>
+        <a href='{% url "accounts:profile" design.user.nickname %}' class='text-decoration-none text-light'>{{ design.user.nickname }}</a>
+        <br><a href="{% url 'pages:like_design' design.id %}" class='text-decoration-none text-light'>
+          {% if request.user in design.like_users.all %}
+          <img src="https://img.icons8.com/material-rounded/100/000000/thumb-up.png"/>
+          {% else %}
+          <img src="https://img.icons8.com/material-outlined/100/000000/thumb-up.png"/>
+          {% endif %}
+        </a>
       </div>
       <div class="d-none d-md-block col-9">
         <img src="{{ design.design_img.url }}" class="img-responsive" width="100%" height='400'>
