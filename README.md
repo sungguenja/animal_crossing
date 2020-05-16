@@ -55,3 +55,8 @@ but I will make that motherXXXXXX in this week
 add many function
 
 really many thing
+
+## 0516
+
+improve loading and qeuryset
+

@@ -86,31 +86,31 @@
             <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
           </a></p>
           {% endif %}
-          {% if dt.0 == '밥' %}
+          {% if dt.kr_name == '밥' %}
           <a href="https://www.youtube.com/watch?v=251l1KKiCrw" target="_blank">밥!</a>
-          {% elif dt.0 == '충성' %}
+          {% elif dt.kr_name == '충성' %}
           <a href="https://www.youtube.com/watch?v=r1Nt6xYPgBA" target="_blank">^^7</a>
-          {% elif dt.0 == '잭슨' %}
+          {% elif dt.kr_name == '잭슨' %}
           <b>나는 있다 ㅎㅎㅎ</b>
-          {% elif dt.0 == '모니카'%}
+          {% elif dt.kr_name == '모니카'%}
           <b>소니아같아.....</b>
-          {% elif dt.0 == '쭈니' %}
+          {% elif dt.kr_name == '쭈니' %}
           <a href="https://www.youtube.com/watch?v=fq_-i293hl4" target="_blank">커여워</a>
-          {% elif dt.0 == '에바' %}
+          {% elif dt.kr_name == '에바' %}
           <a href="https://www.google.com/search?q=%EC%82%BC%EC%A7%84%EC%97%90%EB%B0%94&sxsrf=ALeKk00h3P7MK_YOPbpLmWfTrN9mEdc9Zg:1586872445714&tbm=isch&source=iu&ictx=1&fir=zfnIq8V7axqqMM%253A%252C49DX5Ul9ly3rZM%252C_&vet=1&usg=AI4_-kQ0OGcxJO2WcEXK_Fh-i6oCei2DkQ&sa=X&ved=2ahUKEwjMzLjDiOjoAhWPOnAKHZ7-BjcQ9QEwAHoECAoQFA#imgrc=zfnIq8V7axqqMM:" target="_blank">삼진 에바</a>
-          {% elif dt.0 == '헐크' %}
+          {% elif dt.kr_name == '헐크' %}
           <button class="btn btn-success">헐크</button>
-          {% elif dt.0 == '슈베르트' %}
+          {% elif dt.kr_name == '슈베르트' %}
           <a href="https://youtu.be/jA8v5y_gcvA" target="_blank">아버지 뒤에 마왕이 보여요</a>
-          {% elif dt.0 == '탁호' %}
+          {% elif dt.kr_name == '탁호' %}
           <a href="https://www.google.com/maps/d/u/0/viewer?mid=1EdVUZBtD6W4G0QMMXKVoLU-MzmCM3WmE&hl=ko&ll=37.257917144210296%2C127.05534659116995&z=13" target="_blank">언제나 맛있지</a>
-          {% elif dt.0 == '쪼끼' %}
-          <a href="https://www.youtube.com/watch?v=rneay0FfqFA" target="_blank">까마귀</a>
-          {% elif dt.0 == '피엘' %}
+          {% elif dt.kr_name == '쪼끼' %}
+          <a href="https://www.youtube.com/watch?v=rneay0FfqFA&feature=youtu.be&t=485" target="_blank">까마귀</a>
+          {% elif dt.kr_name == '피엘' %}
           <a href="https://www.youtube.com/watch?v=hpXD2hwHjC8" target="_blank">그때는 조커가 되는거야!</a>
-          {% elif dt.0 == '티미' %}
+          {% elif dt.kr_name == '티미' %}
           <a href="https://www.youtube.com/watch?v=18P30OS-l7Y" target="_blank">티미티미티미 터너</a>
-          {% elif dt.0 == '스트로베리' %}
+          {% elif dt.kr_name == '스트로베리' %}
           <a href="https://www.youtube.com/watch?v=Yi89dLf9MUk" target="_blank">딸기가 빠졌잖아</a>
           {% endif %}
         </div>
@@ -130,8 +130,8 @@
       <th scope="col">모습</th>
       <th scope="col">생일</th>
       <th scope="col">성격</th>
-      <th scope="col">우리주민</th>
       <th scope="col">like</th>
+      <th scope="col">우리주민</th>
       <th scope="col">상세정보</th>
     </tr>
   </thead>
@@ -143,21 +143,21 @@
       <td>{{ dt.birthday }}</td>
       <td>{{ dt.character }}</td>
       {% if request.user in dt.like_user.all %}
-        <td>:<a href="{% url 'pages:like' dt.id %}">
+      <td><a href='{% url "pages:live" dt.id %}'>
+        <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+      </a></td>
+      {% else %}
+      <td><a href='{% url "pages:live" dt.id %}'>
+        <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+      </a></td>
+      {% endif %}
+      {% if request.user in dt.live_with.all %}
+        <td><a href="{% url 'pages:like' dt.id %}">
           <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
         </a></td>
       {% else %}
         <td><a href="{% url 'pages:like' dt.id %}">
           <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
-        </a></td>
-      {% endif %}
-      {% if request.user in dt.live_with.all %}
-        <td><a href='{% url "pages:live" dt.id %}'>
-          <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
-        </a></td>
-      {% else %}
-        <td><a href='{% url "pages:live" dt.id %}'>
-          <img src="https://img.icons8.com/ios/20/000000/like.png"/>
         </a></td>
       {% endif %}
       <td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#{{ dt.kr_name }}">click

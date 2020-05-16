@@ -15,7 +15,7 @@ def nook(request):
     return render(request, 'pages/nook.html')
 
 def villagers(request):
-    neighbors = apps.get_model('accounts','Villagers').objects.all()
+    neighbors = apps.get_model('accounts','Villagers').objects.all().prefetch_related('like_user')
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     context = {
@@ -25,7 +25,7 @@ def villagers(request):
     return render(request, 'pages/villagers.html', context)
 
 def specy(request,spec):
-    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec)
+    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user')
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     context = {
@@ -38,7 +38,7 @@ def vil_ran(request):
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     spec = choice(sp)
-    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec)
+    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user')
     context = {
         'neighbors':neighbors,
         'sp':sp
@@ -74,7 +74,7 @@ def arr(request):
     return render(request, 'pages/arr.html')
 
 def all_bug(request):
-    bugs = apps.get_model('accounts','Bug').objects.all()
+    bugs = apps.get_model('accounts','Bug').objects.all().prefetch_related('catch_user')
     context = {
         'bugs':bugs
     }
@@ -93,7 +93,7 @@ def catch_bug(request,bug_id):
     return redirect('pages:all_bug')
 
 def all_fish(request):
-    fishes = apps.get_model('accounts','Fish').objects.all()
+    fishes = apps.get_model('accounts','Fish').objects.all().prefetch_related('catch_user')
     context = {
         'fishes':fishes
     }

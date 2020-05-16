@@ -9,7 +9,7 @@
   </div>
 	{% endfor %}
 {% endif %}
-<a href="/wiki_like/my_design/affect/" class="col-2"><button class='btn btn-info col-12'>디자인<br>자랑하기</button></a>
+<a href="/wiki_like/my_design/affect/" class="col-lg-2 col-md-3 col-6"><button class='btn btn-info col-12'>디자인<br>자랑하기</button></a>
 <div class="col-9"></div>
 <hr class="d-none d-md-block col-12">
 <nav class='col-12'>
@@ -44,10 +44,7 @@
       </div>
     </div>
     <hr class="d-none d-md-block col-12">
-    {% endfor %}
-    {% for design in pic %}
     <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
-    <hr class="d-block d-md-none col-12">
     {% endfor %}
   </div>
 
@@ -72,10 +69,7 @@
       </div>
     </div>
     <hr class="d-none d-md-block col-12">
-    {% endfor %}
-    {% for design in top %}
     <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
-    <hr class="d-block d-md-none col-12">
     {% endfor %}
   </div>
 
@@ -100,10 +94,7 @@
       </div>
     </div>
     <hr class="d-none d-md-block col-12">
-    {% endfor %}
-    {% for design in onepiece %}
     <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
-    <hr class="d-block d-md-none col-12">
     {% endfor %}
   </div>
 
@@ -128,10 +119,7 @@
       </div>
     </div>
     <hr class="d-none d-md-block col-12">
-    {% endfor %}
-    {% for design in hat %}
     <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
-    <hr class="d-block d-md-none col-12">
     {% endfor %}
   </div>
 
@@ -156,10 +144,7 @@
       </div>
     </div>
     <hr class="d-none d-md-block col-12">
-    {% endfor %}
-    {% for design in no_cat %}
     <div class="d-block d-md-none col-12"><img src="{{ design.design_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"></div>
-    <hr class="d-block d-md-none col-12">
     {% endfor %}
   </div>
 
