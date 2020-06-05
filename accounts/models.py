@@ -7,6 +7,9 @@ class User(AbstractUser):
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings')
     nickname = models.CharField(max_length=30, default='익명')
 
+    def __str__(self):
+        return self.username
+
 class Villagers(models.Model):
     kr_name = models.CharField(max_length=10)
     jp_name = models.CharField(max_length=10)
@@ -18,6 +21,9 @@ class Villagers(models.Model):
     like_user = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='like_villager')
     live_with = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='live_villager')
 
+    def __str__(self):
+        return self.kr_name
+
 class Bug(models.Model):
     name = models.CharField(max_length=20)
     date = models.TextField()
@@ -25,6 +31,9 @@ class Bug(models.Model):
     where = models.TextField()
     bell = models.IntegerField()
     catch_user = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='catch_bug')
+
+    def __str__(self):
+        return self.name
 
 class Fish(models.Model):
     name = models.CharField(max_length=20)
@@ -34,3 +43,6 @@ class Fish(models.Model):
     size = models.TextField()
     bell = models.IntegerField()
     catch_user = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='catch_fish')
+
+    def __str__(self):
+        return self.name

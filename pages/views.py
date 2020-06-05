@@ -2,7 +2,7 @@ import os
 from django.apps import apps
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse 
+from django.http import HttpResponse, JsonResponse
 from random import choice
 from .forms import *
 from .models import *
@@ -15,7 +15,7 @@ def nook(request):
     return render(request, 'pages/nook.html')
 
 def villagers(request):
-    neighbors = apps.get_model('accounts','Villagers').objects.all().prefetch_related('like_user')
+    neighbors = apps.get_model('accounts','Villagers').objects.prefetch_related('like_user').prefetch_related('live_with').all()
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     context = {
@@ -25,7 +25,7 @@ def villagers(request):
     return render(request, 'pages/villagers.html', context)
 
 def specy(request,spec):
-    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user')
+    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user').prefetch_related('live_with')
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     context = {
@@ -38,7 +38,7 @@ def vil_ran(request):
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     spec = choice(sp)
-    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user')
+    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user').prefetch_related('live_with')
     context = {
         'neighbors':neighbors,
         'sp':sp
@@ -49,26 +49,41 @@ def like(request,villager_id):
     if request.user.is_authenticated:
         neighbor = get_object_or_404(apps.get_model('accounts','Villagers'),id=villager_id)
         if neighbor.like_user.filter(id=request.user.pk).exists():
+            logined = True
+            liked = False
             neighbor.like_user.remove(request.user)
         else:
+            logined = True
+            liked = True
             neighbor.like_user.add(request.user)
     else:
-        messages.warning(request,'로그인을 해주시길 바랍니다.')
-    return redirect('pages:villagers')
+        logined = False
+        liked = True
+    return JsonResponse({'logined':logined,'liked':liked})
 
 def live(request,villager_id):
     if request.user.is_authenticated:
         neighbor = get_object_or_404(apps.get_model('accounts','Villagers'),id=villager_id)
         if neighbor.live_with.filter(id=request.user.pk).exists():
             neighbor.live_with.remove(request.user)
+            logined = True
+            lived = False
+            ten = False
         else:
             if request.user.live_villager.count() < 10:
                 neighbor.live_with.add(request.user)
+                logined = True
+                lived = True
+                ten = False
             else:
-                messages.info(request,'이웃은 열명까지만 가능합니다')
+                logined = True
+                lived = False
+                ten = True
     else:
-        messages.warning(request,'로그인을 해주시길 바랍니다.')
-    return redirect('pages:villagers')
+        logined = False
+        lived = False
+        ten = False
+    return JsonResponse({'logined':logined,'lived':lived,'ten':ten})
 
 def arr(request):
     return render(request, 'pages/arr.html')
@@ -112,7 +127,7 @@ def catch_fish(request,fish_id):
     return redirect('pages:all_fish')
 
 def my_design(request):
-    pic = design.objects.all()
+    pic = design.objects.prefetch_related('like_users').all()
     pic = pic[::-1]
     top = []
     onepiece = []

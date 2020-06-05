@@ -29,23 +29,15 @@
   </button>
   <div class="card-body row">
     {% if request.user in dt.like_user.all %}
-    <a href="{% url 'pages:like' dt.id %}" class="col-3">
-      <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
-    </a>
+      <img data-id="{{ dt.pk }}" class="col-3 like-button" src="https://img.icons8.com/ios-filled/20/000000/like.png" style="height: 30px; cursor: pointer;">
     {% else %}
-    <a href="{% url 'pages:like' dt.id %}" class='col-3'>
-      <img src="https://img.icons8.com/ios/20/000000/like.png"/>
-    </a>
+      <img data-id="{{ dt.pk }}" class="col-3 like-button" src="https://img.icons8.com/ios/20/000000/like.png" style="height: 30px; cursor: pointer;">
     {% endif %}
     <p class="card-text col-6 text-center">{{ dt.kr_name }}</p>
     {% if request.user in dt.live_with.all %}
-    <a href='{% url "pages:live" dt.id %}' class="col-3">
-      <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
-    </a>
+      <img data-id="{{ dt.pk }}" class="col-3 live-button" src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png" style="height: 30px; cursor: pointer;"/>
     {% else %}
-    <a href='{% url "pages:live" dt.id %}' class='col-3'>
-      <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
-    </a>
+      <img data-id="{{ dt.pk }}" class="col-3 live-button" src="https://img.icons8.com/ios/20/000000/cottage--v1.png" style="height: 30px; cursor: pointer;"/>
     {% endif %}
   </div>
 </div>
@@ -69,22 +61,22 @@
           <p>성격: {{ dt.character }}</p>
           <p>종: {{ dt.species }}</p>
           {% if request.user in dt.like_user.all %}
-          <p>마음에 드시나요?:<a href="{% url 'pages:like' dt.id %}">
-            <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
-          </a></p>
+          <p>마음에 드시나요?:
+            <img data-id="{{ dt.pk }}" class="col-3 like-button" src="https://img.icons8.com/ios-filled/20/000000/like.png" style="height: 30px; cursor: pointer;">
+          </p>
           {% else %}
-          <p>마음에 드시나요?:<a href="{% url 'pages:like' dt.id %}">
-            <img src="https://img.icons8.com/ios/20/000000/like.png"/>
-          </a></p>
+          <p>마음에 드시나요?:
+            <img data-id="{{ dt.pk }}" class="col-3 like-button" src="https://img.icons8.com/ios/20/000000/like.png" style="height: 30px; cursor: pointer;">
+          </p>
           {% endif %}
           {% if request.user in dt.live_with.all %}
-          <p>이웃이신가요?<a href='{% url "pages:live" dt.id %}'>
-            <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
-          </a></p>
+          <p>이웃이신가요?
+            <img data-id="{{ dt.pk }}" class="col-3 live-button" src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png" style="height: 30px; cursor: pointer;"/>
+          </p>
           {% else %}
-          <p>이웃이신가요?<a href='{% url "pages:live" dt.id %}'>
-            <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
-          </a></p>
+          <p>이웃이신가요?
+            <img data-id="{{ dt.pk }}" class="col-3 live-button" src="https://img.icons8.com/ios/20/000000/cottage--v1.png" style="height: 30px; cursor: pointer;"/>
+          </p>
           {% endif %}
           {% if dt.kr_name == '밥' %}
           <a href="https://www.youtube.com/watch?v=251l1KKiCrw" target="_blank">밥!</a>
@@ -143,21 +135,21 @@
       <td>{{ dt.birthday }}</td>
       <td>{{ dt.character }}</td>
       {% if request.user in dt.like_user.all %}
-      <td><a href='{% url "pages:live" dt.id %}'>
-        <img src="https://img.icons8.com/ios-filled/20/000000/like.png"/>
+      <td><a>
+        <img data-id="{{ dt.pk }}" class="like-button" src="https://img.icons8.com/ios-filled/20/000000/like.png" style="cursor: pointer;">
       </a></td>
       {% else %}
-      <td><a href='{% url "pages:live" dt.id %}'>
-        <img src="https://img.icons8.com/ios/20/000000/like.png"/>
+      <td><a>
+        <img data-id="{{ dt.pk }}" class="like-button" src="https://img.icons8.com/ios/20/000000/like.png" style="cursor: pointer;">
       </a></td>
       {% endif %}
       {% if request.user in dt.live_with.all %}
-        <td><a href="{% url 'pages:like' dt.id %}">
-          <img src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"/>
+        <td><a>
+          <img data-id="{{ dt.pk }}" class="live-button" src="https://img.icons8.com/ios-filled/20/000000/cottage--v1.png" style="cursor: pointer;"/>
         </a></td>
       {% else %}
-        <td><a href="{% url 'pages:like' dt.id %}">
-          <img src="https://img.icons8.com/ios/20/000000/cottage--v1.png"/>
+        <td><a >
+          <img data-id="{{ dt.pk }}" class="live-button" src="https://img.icons8.com/ios/20/000000/cottage--v1.png" style="cursor: pointer;"/>
         </a></td>
       {% endif %}
       <td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#{{ dt.kr_name }}">click
@@ -167,4 +159,42 @@
   </tbody>
 </table>
 </div>
+{% endblock %}
+{% block JS %}
+<script>
+  const likeButton = document.querySelectorAll(".like-button")
+  likeButton.forEach(function(likeButton){
+    likeButton.addEventListener("click",function(event){
+      const villagerId = event.target.dataset.id
+      // 요부분 수정해서 복붙!
+      axios.get(`http://127.0.0.1:8000/wiki_like/${villagerId}/like/`)
+      .then(response => {
+        if (response.data.logined) {
+          if (response.data.liked) {
+            event.target.src = "https://img.icons8.com/ios-filled/20/000000/like.png"
+          } else {
+            event.target.src = "https://img.icons8.com/ios/20/000000/like.png"
+          }
+        } else {alert("로그인을 해주세요!")}
+      })
+    })
+  })
+  const liveButton = document.querySelectorAll(".live-button")
+  liveButton.forEach(function(liveButton){
+    liveButton.addEventListener("click",function(event){
+      const villagerId = event.target.dataset.id
+      axios.get(`http://127.0.0.1:8000/wiki_like/${villagerId}/live/`)
+      .then(response => {
+        if (response.data.logined) {
+          if (response.data.lived) {
+            event.target.src = "https://img.icons8.com/ios-filled/20/000000/cottage--v1.png"
+          } else {
+            event.target.src = "https://img.icons8.com/ios/20/000000/cottage--v1.png"
+            if (response.data.ten) {alert("이웃은 열명까지만 가능합니다")}
+          }
+        } else {alert("로그인을 해주세요!")}
+      })
+    })
+  })
+</script>
 {% endblock %}
