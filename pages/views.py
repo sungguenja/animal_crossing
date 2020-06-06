@@ -100,12 +100,17 @@ def catch_bug(request,bug_id):
     if request.user.is_authenticated:
         bug = get_object_or_404(apps.get_model('accounts','Bug'),id=bug_id)
         if bug.catch_user.filter(id=request.user.pk).exists():
+            logined = True
+            catch = False
             bug.catch_user.remove(request.user)
         else:
+            logined = True
+            catch = True
             bug.catch_user.add(request.user)
     else:
-        messages.warning(request,'로그인을 해주시길 바랍니다.')
-    return redirect('pages:all_bug')
+        logined = False
+        catch = False
+    return JsonResponse({'logined':logined,'catch':catch})
 
 def all_fish(request):
     fishes = apps.get_model('accounts','Fish').objects.all().prefetch_related('catch_user')
@@ -119,12 +124,17 @@ def catch_fish(request,fish_id):
     if request.user.is_authenticated:
         fish = get_object_or_404(apps.get_model('accounts','Fish'),id=fish_id)
         if fish.catch_user.filter(id=request.user.pk).exists():
+            logined = True
+            catch = False
             fish.catch_user.remove(request.user)
         else:
+            logined = True
+            catch = True
             fish.catch_user.add(request.user)
     else:
-        messages.warning(request,'로그인을 해주시길 바랍니다.')
-    return redirect('pages:all_fish')
+        logined = False
+        catch = False
+    return JsonResponse({'logined':logined,'catch':catch})
 
 def my_design(request):
     pic = design.objects.prefetch_related('like_users').all()
@@ -170,10 +180,14 @@ def your_design(request):
 def like_design(request,design_id):
     if request.user.is_authenticated:
         this_design = get_object_or_404(design,id=design_id)
+        logined = True
         if this_design.like_users.filter(id=request.user.pk).exists():
+            like = False
             this_design.like_users.remove(request.user)
         else:
+            like = True
             this_design.like_users.add(request.user)
     else:
-        messages.warning(request,'로그인을 해주시길 바랍니다.')
-    return redirect('pages:my_design')
+        logined = False
+        like = False
+    return JsonResponse({'logined':logined,'like':like})

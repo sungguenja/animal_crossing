@@ -36,9 +36,9 @@
             <td>{{ dt.bell }}</td>
             {% if request.user.is_authenticated %}
             {% if request.user in dt.catch_user.all %}
-            <th scope="col"><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/doodle/20/000000/butterfly-net.png"/></a></th>
+            <th scope="col"><img data-id="{{ dt.pk }}" class="catch-button" src="https://img.icons8.com/doodle/20/000000/butterfly-net.png" style="cursor: pointer;"/></th>
             {% else %}
-            <th scope="col"><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/dotty/20/000000/butterfly-net.png"/></a></th>
+            <th scope="col"><img data-id="{{ dt.pk }}" class="catch-button" src="https://img.icons8.com/dotty/20/000000/butterfly-net.png" style="cursor: pointer;"/></th>
             {% endif %}
             {% endif %}
           </tr>
@@ -59,9 +59,9 @@
             <div class="col-4">장소<br>{{ dt.where }}</div>
             <div class="col-4">가격<br>{{ dt.bell }}</div>
             {% if request.user in dt.catch_user.all %}
-            <div scope="col-4">잡았나?<br><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/doodle/20/000000/butterfly-net.png"/></a></div>
+            <div scope="col-4">잡았나?<br><img data-id="{{ dt.pk }}" class="catch-button" style="cursor: pointer;" src="https://img.icons8.com/doodle/20/000000/butterfly-net.png"/></div>
             {% else %}
-            <div scope="col-4">잡았나?<br><a href='{% url "pages:catch_bug" dt.id%}'><img src="https://img.icons8.com/dotty/20/000000/butterfly-net.png"/></a></div>
+            <div scope="col-4">잡았나?<br><img data-id="{{ dt.pk }}" class="catch-button" style="cursor: pointer;" src="https://img.icons8.com/dotty/20/000000/butterfly-net.png"/></div>
             {% endif %}
             {% else %}
             <div class="col-6">장소<br>{{ dt.where }}</div>
@@ -76,4 +76,28 @@
     </div>
   </div>
 </div>
+{% endblock %}
+{% block JS %}
+<script>
+  const catchButtons = document.querySelectorAll('.catch-button')
+  catchButtons.forEach(function(catchButton){
+    catchButton.addEventListener('click',function(event){
+      const bugID = event.target.dataset.id
+      // 이 부분 수정
+      axios.get(`http://127.0.0.1:8000/wiki_like/arr/bugs/${bugID}/`)
+      .then(response => {
+        if (response.data.logined) {
+          if (response.data.catch) {
+            event.target.src = "https://img.icons8.com/doodle/20/000000/butterfly-net.png"
+          } else {
+            event.target.src = "https://img.icons8.com/dotty/20/000000/butterfly-net.png"
+          }
+        } else {
+          alert('로그인을 해주시길 바랍니다')
+        }
+      })
+      .catch(err => console.log(err))
+    })
+  })
+</script>
 {% endblock %}

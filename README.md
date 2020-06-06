@@ -60,3 +60,16 @@ really many thing
 
 improve loading and qeuryset
 
+## 0606
+
+add asynchronous like, live, catch button
+
+next purposes are below
+
+first. add fossil and art list
+
+second. add social login
+
+third. radish and deal board
+
+forth. make this web mobile application (with Vue.js)

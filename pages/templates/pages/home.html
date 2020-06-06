@@ -13,7 +13,15 @@
     <source src="{% static 'BGM.mp3' %}" type="audio/mp3">
 </audio>
   <div class="d-none d-md-block card col-3 bcard" style="width: 18rem;">
-    <a href="{% url 'pages:arr' %}"><img src="{% static 'list.png' %}" class="card-img-top" alt="..." height="300"></a>
+    <div class="btn-group dropdown">
+      <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="{% static 'list.png' %}" class="card-img-top" alt="..." height="300">
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'pages:all_bug' %}">벌레 도감</a>
+        <a class="dropdown-item" href="{% url 'pages:all_fish' %}">생선 도감</a>
+      </div>
+    </div>
     <div class="card-body">
       <p class="card-text">도감 리스트를 보여드립니다</p>
     </div>
@@ -63,6 +71,8 @@
   <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:vil_ran' %}"><img src="{% static 'freind.png' %}" alt="..." height="200"><br>이웃들</a></div>
   <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:my_design' %}"><img src="{% static 'design.png' %}" alt="..." height="200"><br>My design</a></div>
 </div>
+{% endblock %}
+{% block JS %}
 <script>
   var clockTarget = document.getElementById("clock");
   function clock() {
@@ -82,5 +92,5 @@
   setInterval(clock, 1000);
   } 
   init();
-  </script>
+</script>
 {% endblock %}

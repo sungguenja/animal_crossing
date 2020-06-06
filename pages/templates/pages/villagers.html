@@ -176,7 +176,7 @@
             event.target.src = "https://img.icons8.com/ios/20/000000/like.png"
           }
         } else {alert("로그인을 해주세요!")}
-      })
+      }).catch(err => console.log(err))
     })
   })
   const liveButton = document.querySelectorAll(".live-button")
@@ -193,7 +193,7 @@
             if (response.data.ten) {alert("이웃은 열명까지만 가능합니다")}
           }
         } else {alert("로그인을 해주세요!")}
-      })
+      }).catch(err => console.log(err))
     })
   })
 </script>
