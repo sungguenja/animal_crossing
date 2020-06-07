@@ -11,3 +11,12 @@ class design(models.Model):
 
     def __str__(self):
         return '{0}, {1}, {2}'.format(self.title, self.category, self.user)
+
+class artwork(models.Model):
+    title = models.CharField(max_length=100)
+    original = models.CharField(max_length=100)
+    fake = models.BooleanField()
+    have_user = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='have_artwork')
+
+    def __str__(self):
+        return self.title
