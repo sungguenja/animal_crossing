@@ -15,7 +15,7 @@ def nook(request):
     return render(request, 'pages/nook.html')
 
 def villagers(request):
-    neighbors = apps.get_model('accounts','Villagers').objects.prefetch_related('like_user').prefetch_related('live_with').all()
+    neighbors = apps.get_model('accounts','Villagers').objects.prefetch_related('like_user').prefetch_related('live_with').order_by('kr_name')
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     context = {
@@ -25,7 +25,7 @@ def villagers(request):
     return render(request, 'pages/villagers.html', context)
 
 def specy(request,spec):
-    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user').prefetch_related('live_with')
+    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user').prefetch_related('live_with').order_by('kr_name')
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     context = {
@@ -38,7 +38,7 @@ def vil_ran(request):
     sp = ['dog','frog','Anteater','gorilla','cat','bear','wolf',
 'squirrel','chicken','eagle','pig','horse','octopus','deer','lion','bird','cow','baby_bear','crocodile','sheep','goat','duck','monkey','mouse','kangaroo','eliphant','rhino','koala','ostrich','rabbit','penguin','hippo','hamster','tiger']
     spec = choice(sp)
-    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user').prefetch_related('live_with')
+    neighbors = apps.get_model('accounts','Villagers').objects.filter(species=spec).prefetch_related('like_user').prefetch_related('live_with').order_by('kr_name')
     context = {
         'neighbors':neighbors,
         'sp':sp
@@ -191,3 +191,25 @@ def like_design(request,design_id):
         logined = False
         like = False
     return JsonResponse({'logined':logined,'like':like})
+
+def all_artwork(request):
+    artworks = artwork.objects.all().order_by('title').prefetch_related('have_user')
+    context = {
+        'artworks': artworks
+    }
+    return render(request,'pages/artwork.html',context)
+
+def have_artwork(request,artwork_id):
+    if request.user.is_authenticated:
+        this_artwork = get_object_or_404(artwork,pk=artwork_id)
+        logined = True
+        if this_artwork.have_user.filter(id=request.user.pk).exists():
+            have = False
+            this_artwork.have_user.remove(request.user)
+        else:
+            have = True
+            this_artwork.have_user.add(request.user)
+    else:
+        have = False
+        logined = False
+    return JsonResponse({'logined':logined,'have':have})

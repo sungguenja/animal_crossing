@@ -18,14 +18,20 @@
 <h3 class="col-12">벌레 도감 달성률</h3>
 <div class="col-12">
 <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: {{ bug_count }}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{{ bug_count }} %</div>
+    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: {{ bug_count }}%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{{ bug_count }} %</div>
 </div>
 </div>
 <div class="col-12">
 <h3 class="col-12">생선 도감 달성률</h3>
 <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: {{ fish_count }}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">{{ fish_count }}%</div>
+    <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: {{ fish_count }}%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">{{ fish_count }}%</div>
 </div>
+</div>
+<div class="col-12">
+  <h3 class="col-12">미술품 도감 달성률</h3>
+  <div class="progress">
+      <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ artwork_count }}%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">{{ artwork_count }}%</div>
+  </div>
 </div>
 <h4 class="col-12">주민들</h4>
 {% for dt in person.live_villager.all %}

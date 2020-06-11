@@ -73,3 +73,9 @@ second. add social login
 third. radish and deal board
 
 forth. make this web mobile application (with Vue.js)
+
+### 0611
+
+I add artworks list
+
+next will be song

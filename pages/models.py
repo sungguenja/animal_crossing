@@ -20,3 +20,27 @@ class artwork(models.Model):
 
     def __str__(self):
         return self.title
+
+class fossil_category(models.Model):
+    title = models.CharField(max_length=100)
+    tmi = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+class fossil(models.Model):
+    category = models.ForeignKey(fossil_category,on_delete=models.CASCADE)
+    part = models.CharField(max_length=100)
+    bell = models.IntegerField()
+    have_user = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='have_fossil')
+    
+    def __str__(self):
+        return '{0}의 {1}'.format(self.category,self.part)
+    
+class song(models.Model):
+    kr_title = models.CharField(max_length=100)
+    jp_title = models.CharField(max_length=100)
+    en_title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.kr_title

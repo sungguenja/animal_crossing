@@ -43,13 +43,15 @@ def profile(request,nickname):
     if nickname == '익명':
         messages.info(request,'죄송합니다 익명의 유저는 볼 수 없습니다')
         return redirect('pages:my_design')
-    person = get_object_or_404(get_user_model(), nickname=nickname)
-    bug_count = (int(person.catch_bug.count())/80)*100
-    fish_count = (int(person.catch_fish.count())/80)*100
+    person = get_object_or_404(get_user_model(),nickname=nickname)
+    bug_count = round((int(person.catch_bug.count())/80)*100)
+    fish_count = round((int(person.catch_fish.count())/80)*100)
+    artwork_count = round((int(person.have_artwork.count())/43)*100)
     context = {
         'person': person,
         'bug_count': bug_count,
-        'fish_count': fish_count
+        'fish_count': fish_count,
+        'artwork_count': artwork_count,
     }
     return render(request,'accounts/profile.html', context)
 
@@ -69,11 +71,13 @@ def my_profile(request,user_id):
         messages.info(request,'남의 프로필은 보실 수 없습니다')
         return redirect('pages:home')
     person = get_object_or_404(get_user_model(), id=user_id)
-    bug_count = person.catch_bug.count()
-    fish_count = person.catch_fish.count()
+    bug_count = round((int(person.catch_bug.count())/80)*100)
+    fish_count = round((int(person.catch_fish.count())/80)*100)
+    artwork_count = round((int(person.have_artwork.count())/43)*100)
     context = {
         'person': person,
         'bug_count': bug_count,
-        'fish_count': fish_count
+        'fish_count': fish_count,
+        'artwork_count': artwork_count,
     }
     return render(request,'accounts/profile.html', context)

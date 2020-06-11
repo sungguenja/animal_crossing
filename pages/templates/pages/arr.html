@@ -10,7 +10,12 @@
     <h1>생선 도감</h1>
       <a href="/wiki_like/arr/fishes/"><img class='col-12' src="{% static 'fishes.jpg' %}"></a>
   </div>
+  <div class='d-none d-md-block col-md-5'>
+    <h1>미술품 도감</h1>
+      <a href="{% url 'pages:all_artwork' %}"><img class='col-12' src="{% static 'artworks.jpg' %}"></a>
+  </div>
   <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:all_bug' %}"><img src="{% static 'mini_bug.png' %}" alt="..." height="200"><br>벌레 도감</a></div>
   <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:all_fish' %}"><img src="{% static 'mini_fish.png' %}" alt="..." height="200"><br>생선 도감</a></div>
+  <div class="d-block d-md-none col-6 text-center text-decoration-none"><a class='text-decoration-none' href="{% url 'pages:all_artwork' %}"><img src="{% static 'mini_artwork.png' %}" alt="..." height="200"><br>미술품 도감</a></div>
 </div>
 {% endblock %}
