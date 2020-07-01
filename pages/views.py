@@ -213,3 +213,10 @@ def have_artwork(request,artwork_id):
         have = False
         logined = False
     return JsonResponse({'logined':logined,'have':have})
+
+def all_fossils(request):
+    fossil_categories = fossil_category.objects.prefetch_related('fossil_set').order_by('title')
+    context = {
+        'fossil_categories': fossil_categories
+    }
+    return render(request,'pages/fossil.html',context)

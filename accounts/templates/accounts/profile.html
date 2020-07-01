@@ -15,8 +15,8 @@
 </div>
 {% endif %}
 <h2 class="col-12">{% if person.id != request.user.id %}{{ person.nickname }}님의 진행상황{% else %}{{ request.user }}님의 진행상황.{% endif %}</h2>
-<h3 class="col-12">벌레 도감 달성률</h3>
 <div class="col-12">
+<h3 class="col-12">벌레 도감 달성률</h3>
 <div class="progress">
     <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: {{ bug_count }}%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{{ bug_count }} %</div>
 </div>

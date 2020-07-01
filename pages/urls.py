@@ -19,6 +19,7 @@ urlpatterns = [
     path('arr/fishes/<int:fish_id>/', views.catch_fish, name='catch_fish'),
     path('arr/artworks/',views.all_artwork,name='all_artwork'),
     path('arr/artworks/<int:artwork_id>/',views.have_artwork,name='have_artwork'),
+    path('arr/fossils/',views.all_fossils,name='all_fossils'),
     path('my_design/', views.my_design, name='my_design'),
     path('my_design/affect/', views.your_design, name='your_design'),
     path('my_design/<int:design_id>/', views.like_design, name='like_design'),

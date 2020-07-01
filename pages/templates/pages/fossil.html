@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+{% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-danger col-12" role="alert">
+    {{ message.message }}
+  </div>
+  {% endfor %}
+{% endif %}
+  <table class="table table-hover col-12">
+    <thead>
+      <tr>
+        <th scope="col">화석</th>
+        <th scope="col">부위별 정보</th>
+        <th scope="col">부엉씨의 설명</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for fossil_category in fossil_categories %}
+      <tr>
+        <th scope="row">{{ fossil_category.title }}</th>
+        <td>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">이미지</th>
+                <th scope="col">화석 이름</th>
+                <th scope="col">판매가</th>
+                {% if request.user.is_authenticated %}
+                  <th scope="col">발굴하셨나요?</th>
+                {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for fossil in fossil_category.fossil_set.all %}
+              <tr>
+                <th scope="row"><img src="{% static 'fossils/' %}{{ fossil_category.title }}{{ fossil.part }}.png" widrh='60' height='60'></th>
+                <td>{{ fossil_category.title }}{{ fossil.part }}</td>
+                <td>{{ fossil.bell }}</td>
+                {% if request.user.is_authenticated %}
+                  {% if request.user in fossil.have_user.all %}
+                  <th scope="col"><img src="https://img.icons8.com/ios-filled/50/000000/dog-bone.png"/></th>
+                  {% else %}
+                  <th scope="col"><img src="https://img.icons8.com/ios/50/000000/dog-bone.png"/></th>
+                  {% endif %}
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <div class="btn-group dropup">
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              부엉씨의 설명
+            </button>
+            <div class="dropdown-menu p-4 dropdown-menu-right" style="width: 500px;">
+              {{ fossil_category.tmi|linebreaks }}
+            </div>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block JS %}
+{% endblock %}
