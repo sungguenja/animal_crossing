@@ -41,6 +41,7 @@ class song(models.Model):
     kr_title = models.CharField(max_length=100)
     jp_title = models.CharField(max_length=100)
     en_title = models.CharField(max_length=100)
+    have_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='have_song')
 
     def __str__(self):
         return self.kr_title

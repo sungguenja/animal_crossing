@@ -107,6 +107,7 @@ celerybeat-schedule
 .mr.developer.cfg
 .project
 .pydevproject
+.env
 
 # mkdocs documentation
 /site
@@ -115,6 +116,7 @@ celerybeat-schedule
 .mypy_cache/
 .dmypy.json
 dmypy.json
+secrets.json
 
 # Pyre type checker
 .pyre/

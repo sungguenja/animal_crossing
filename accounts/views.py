@@ -74,10 +74,12 @@ def my_profile(request,user_id):
     bug_count = round((int(person.catch_bug.count())/80)*100)
     fish_count = round((int(person.catch_fish.count())/80)*100)
     artwork_count = round((int(person.have_artwork.count())/43)*100)
+    fossil_count = round((int(person.have_fossil.count())/73)*100)
     context = {
         'person': person,
         'bug_count': bug_count,
         'fish_count': fish_count,
         'artwork_count': artwork_count,
+        'fossil_count': fossil_count,
     }
     return render(request,'accounts/profile.html', context)

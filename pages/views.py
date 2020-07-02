@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from random import choice
 from .forms import *
 from .models import *
+import requests
 
 # Create your views here.
 def home(request):
@@ -220,3 +221,42 @@ def all_fossils(request):
         'fossil_categories': fossil_categories
     }
     return render(request,'pages/fossil.html',context)
+
+def have_fossil(request,fossil_id):
+    if request.user.is_authenticated:
+        this_fossil = get_object_or_404(fossil,pk=fossil_id)
+        logined = True
+        if this_fossil.have_user.filter(pk=request.user.pk).exists():
+            have = False
+            this_fossil.have_user.remove(request.user)
+        else:
+            have = True
+            this_fossil.have_user.add(request.user)
+    else:
+        logined = False
+        have = False
+    return JsonResponse({'logined':logined,'have':have})
+
+def all_songs(request):
+    songs = song.objects.order_by('kr_title')
+    YOUTUBE_KEY = settings.YOUTUBE_KEY
+    context = {
+        'songs': songs,
+        'key': YOUTUBE_KEY
+    }
+    return render(request,'pages/songs.html',context)
+
+def have_song(request,song_id):
+    if request.user.is_authenticated:
+        logined = True
+        this_song = get_object_or_404(song,pk=song_id)
+        if this_song.have_user.filter(pk=request.user.pk).exists():
+            have = False
+            this_song.have_user.remove(request.user)
+        else:
+            have = True
+            this_song.have_user.add(request.user)
+    else:
+        logined = False
+        have = False
+    return JsonResponse({'logined':logined,'have':have})

@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+  <table class="col-11 table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">앨범커버</th>
+        <th scope="col">한글곡명</th>
+        <th scope="col">일어곡명</th>
+        <th scope="col">영어곡명</th>
+        <th scope="col">재생</th>
+        {% if request.user.is_authenticated %}
+        <th scope="col">소유여부</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for song in songs %}
+      <tr>
+        <th scope="row"><img height="40px" src="{% static 'songs/' %}{{ song.kr_title }}.png"></th>
+        <td>{{ song.kr_title }}</td>
+        <td>{{ song.jp_title }}</td>
+        <td>{{ song.en_title }}</td>
+        <td><a class="btn btn-danger song-button" data-kr="{{ song.kr_title }}" data-jp="{{ song.jp_title }}" data-en="{{ song.en_title }}"><img height="25px" src="https://img.icons8.com/ios-filled/50/000000/sort-right.png"/></a></td>
+        {% if request.user.is_authenticated %}
+          {% if request.user in song.have_user.all %}
+          <td><img class="have-button" data-id="{{ song.pk }}" style="cursor: pointer;" height="30px" src="https://img.icons8.com/ios-filled/50/000000/add-song.png"/></td>
+          {% else %}
+          <td><img class="have-button" data-id="{{ song.pk }}" style="cursor: pointer;" height="30px" src="https://img.icons8.com/ios/50/000000/add-song.png"/></td>
+          {% endif %}
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-none d-md-block bg-warning" style="position: fixed; right: 10px; height: 100%; width: 20%;" id="song-bar">
+    <img src="{% static 'songs/kk.png' %}"><br>
+    <h4>안녕, 반가워요</h4>
+    <h4>내 이름은 K.K</h4>
+    <h4>보시다시피 뮤지션이에요</h4>
+    <h4>노래를 선택해주시면</h4>
+    <h4>들려드릴께요</h4>
+    <h4 class="d-none song-title">한국판</h4>
+    <iframe class="d-none" id="kr-window" src=""></iframe>
+    <h4 class="d-none song-title">일본판</h4>
+    <iframe class="d-none" id="jp-window" src=""></iframe>
+    <h4 class="d-none song-title">영어판</h4>
+    <iframe class="d-none" id="en-window" src=""></iframe>
+  </div>
+</div>
+{% endblock %}
+
+{% block JS %}
+<script>
+  const HaveButtons = document.querySelectorAll('.have-button')
+  HaveButtons.forEach(function(haveButton) {
+    haveButton.addEventListener('click', function(event) {
+      const songId = event.target.dataset.id
+      const songUrl = `{% url "pages:have_song" song_id=1234 %}`.replace('1234',songId)
+      axios.get(songUrl)
+      .then(response => {
+        if(response.data.logined) {
+          if(response.data.have) {
+            event.target.src = 'https://img.icons8.com/ios-filled/50/000000/add-song.png'
+          } else {
+            event.target.src = 'https://img.icons8.com/ios/50/000000/add-song.png'
+          }
+        } else {
+          alert('로그인을 해주세요')
+        }
+      })
+      .catch(err => {console.log(err)})
+    })
+  })
+
+  const VideoButtons = document.querySelectorAll('.song-button')
+  const API_URL = "https://www.googleapis.com/youtube/v3/search"
+  const API_KEY = "{{key}}"
+  VideoButtons.forEach(function(videoButton) {
+    videoButton.addEventListener('click',function(event) {
+      const songBar = document.querySelector('#song-bar')
+      if(songBar.hasChildNodes) {
+        while(songBar.firstChild) {
+          if(songBar.firstChild.innerText == '한국판') {break}
+          songBar.firstChild.remove()
+        }
+      }
+      const titles = document.querySelectorAll('.song-title')
+      titles.forEach(function(title) {
+        title.className = ''
+      })
+      axios.get(API_URL, {
+        params: {
+          key: API_KEY,
+          part: 'snippet',
+          type: 'video',
+          q: `${videoButton.dataset.kr}`
+        }
+      })
+      .then(res => {
+        const krWindow = document.querySelector('#kr-window')
+        krWindow.className = ''
+        krWindow.src = `https://www.youtube.com/embed/${res.data.items[0].id.videoId}`
+      })
+      .catch(err => {
+        titles[0].innerText = '죄송합니다'
+        titles[1].innerText = '전체 조회 가능 수가'
+        titles[2].innerText = '초과해서 이용이 불가능합니다ㅠㅜ'
+      })
+      
+      axios.get(API_URL, {
+        params: {
+          key: API_KEY,
+          part: 'snippet',
+          type: 'video',
+          q: `${videoButton.dataset.jp}`
+        }
+      })
+      .then(res => {
+        const jpWindow = document.querySelector('#jp-window')
+        jpWindow.className = ''
+        jpWindow.src = `https://www.youtube.com/embed/${res.data.items[0].id.videoId}`
+      })
+      .catch(err => {console.log(err)})
+
+      axios.get(API_URL, {
+        params: {
+          key: API_KEY,
+          part: 'snippet',
+          type: 'video',
+          q: `${videoButton.dataset.en}`
+        }
+      })
+      .then(res => {
+        const enWindow = document.querySelector('#en-window')
+        enWindow.className = ''
+        enWindow.src = `https://www.youtube.com/embed/${res.data.items[0].id.videoId}`
+      })
+      .catch(err => {console.log(err)})
+    })
+  })
+</script>
+{% endblock %}

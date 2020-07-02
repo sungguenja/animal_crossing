@@ -42,9 +42,9 @@
                 <td>{{ fossil.bell }}</td>
                 {% if request.user.is_authenticated %}
                   {% if request.user in fossil.have_user.all %}
-                  <th scope="col"><img src="https://img.icons8.com/ios-filled/50/000000/dog-bone.png"/></th>
+                  <th scope="col"><img data-id="{{ fossil.pk }}" style="cursor: pointer;" class="have-fossil" src="https://img.icons8.com/ios-filled/50/000000/dog-bone.png"/></th>
                   {% else %}
-                  <th scope="col"><img src="https://img.icons8.com/ios/50/000000/dog-bone.png"/></th>
+                  <th scope="col"><img data-id="{{ fossil.pk }}" style="cursor: pointer;" class="have-fossil" src="https://img.icons8.com/ios/50/000000/dog-bone.png"/></th>
                   {% endif %}
                 {% endif %}
               </tr>
@@ -70,4 +70,24 @@
 {% endblock %}
 
 {% block JS %}
+<script>
+  const HaveButtons = document.querySelectorAll('.have-fossil')
+  HaveButtons.forEach(function(HaveButton) {
+    HaveButton.addEventListener('click', function(event){
+      const fossilId = event.target.dataset.id
+      const fossilUrl = `{% url "pages:have_fossil" fossil_id=1234 %}`.replace('1234',fossilId)
+      axios.get(fossilUrl)
+      .then(response => {
+        if (response.data.logined) {
+          if (response.data.have) {
+            event.target.src = 'https://img.icons8.com/ios-filled/50/000000/dog-bone.png'
+          } else {
+            event.target.src = 'https://img.icons8.com/ios/50/000000/dog-bone.png'
+          }
+        } else { alert('로그인을 해주세요!')}
+      })
+      .catch(err => {console.log(err)})
+    })
+  })
+</script>
 {% endblock %}
