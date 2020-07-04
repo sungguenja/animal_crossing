@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <a class="offset-10 col-2 btn btn-outline-danger my-2" style="cursor: pointer;" href="{% url 'community:rescue_create' %}">구조대 보내기</a>
+  <table class="col-12 table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">작성자</th>
+        <th scope="col">가격</th>
+        <th scope="col">시작시간</th>
+        <th scope="col">끝나는날</th>
+        <th scope="col">비밀번호</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for radish in radishes %}
+      <tr>
+        <th scope="row">{{ radish.user.username }}</th>
+        <td>{{ radish.bell }}</td>
+        <td>{{ radish.start }}</td>
+        <td>{{ radish.end }}</td>
+        <td>{{ radish.lock }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

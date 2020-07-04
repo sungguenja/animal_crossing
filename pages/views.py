@@ -6,7 +6,6 @@ from django.http import HttpResponse, JsonResponse
 from random import choice
 from .forms import *
 from .models import *
-import requests
 
 # Create your views here.
 def home(request):

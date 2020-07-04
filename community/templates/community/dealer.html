@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <select id="sort-select" class="my-3 form-control col-2" onchange="location = this.value;">
+    <option class="sort" value="">물품 종류별로 보기</option>
+    <option class="sort" value="?sort=">전체</option>
+    <option class="sort-artwork" value="?sort=artwork">예술품</option>
+    <option class="sort-dress" value="?sort=dress">옷</option>
+    <option class="sort-diy" value="?sort=diy">diy레시피</option>
+    <option class="sort-fossil" value="?sort=fossil">화석</option>
+    <option class="sort-fruit" value="?sort=fruit">과일</option>
+    <option class="sort-flower" value="?sort=flower">낮은나무 또는 꽃</option>
+    <option class="sort-material" value="?sort=material">재료</option>
+    <option class="sort-villager" value="?sort=villager">주민</option>
+    <option class="sort-service" value="?sort=service">서비스</option>
+    <option class="sort-tool" value="?sort=tool">도구</option>
+    <option class="sort-other" value="?sort=other">기타</option>
+  </select>
+  <a class="offset-8 col-2 btn btn-success my-3" href="{% url 'community:dealer_create' %}" style="cursor: pointer;">거래 등록하기</a>
+  <table class="col-12 table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">작성자</th>
+        <th scope="col">파는 물건</th>
+        <th scope="col">가격</th>
+        <th scope="col">세부사항</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for article in articles %}
+      <tr>
+        <th scope="row">{{ article.user.username }}</th>
+        <td>{{ article.title }}</td>
+        <td>{{ article.want }}</td>
+        <td><a class="btn btn-info" href="{% url 'community:detail' article.pk %}">거래 내용 보기</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

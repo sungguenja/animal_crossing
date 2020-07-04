@@ -79,3 +79,15 @@ forth. make this web mobile application (with Vue.js)
 I add artworks list
 
 next will be song
+
+### 0702
+
+I add fossils, songs list
+
+I will add community for reddish and deal
+
+### 0704
+
+I add community for radish and deal
+
+next I will make vue.js web for app base

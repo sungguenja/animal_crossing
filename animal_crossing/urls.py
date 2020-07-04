@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('wiki_like/', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
+    path('community/', include('community.urls')),
 ]
 
 if settings.DEBUG:

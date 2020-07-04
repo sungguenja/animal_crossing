@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+<h2 class="col-12 my-2">파는 물건 : {{ article.title }}</h2>
+<h2 class="col-12 my-2">판매자 요구 사항 : {{ article.want }}</h2>
+<h2 class="col-12 my-2">판매자 연락처 : {{ article.calling }}</h2>
+{% if article.user == request.user %}
+  {% if article.soldout %}
+  <h2 class="col-12 my-2">팔렸다고 체크하셨습니다!</h2>
+  <h2 class="col-12 my-2">안팔렸다고 다시 체크하시겠습니까?</h2>
+  <a class="btn btn-danger col-2" href="{% url 'community:detail_state' article.pk %}">아직 안팔렸다</a>
+  {% else %}
+  <h2 class="col-12 my-2">아직 안팔렸다고 하셨습니다</h2>
+  <h2 class="col-12 my-2">팔렸나요?</h2>
+  <a class="btn btn-warning col-2" href="{% url 'community:detail_state' article.pk %}">팔렸습니다</a>
+  {% endif %}
+{% else %}
+  {% if article.soldout %}
+  <h2 class="col-12 my-2">팔렸다고 하네요 ㅠㅜ</h2>
+  {% else %}
+  <h2 class="col-12 my-2">아직 안팔렸습니다</h2>
+  {% endif %}
+{% endif %}
+<hr class="col-12">
+<a class="btn btn-primary" href="{% url 'community:dealer' %}">뒤로</a>
+</div>
+{% endblock %}
