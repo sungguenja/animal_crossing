@@ -30,7 +30,7 @@
     <tbody>
       {% for article in articles %}
       <tr>
-        <th scope="row">{{ article.user.username }}</th>
+        <th scope="row">{{ article.user.nickname }}</th>
         <td>{{ article.title }}</td>
         <td>{{ article.want }}</td>
         <td><a class="btn btn-info" href="{% url 'community:detail' article.pk %}">거래 내용 보기</a></td>

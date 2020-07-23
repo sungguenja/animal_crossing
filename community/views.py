@@ -6,7 +6,7 @@ from .forms import *
 # Create your views here.
 now = datetime.datetime.now()
 def rescue(request):
-    radishes = Radish.objects.filter(start__lte=now,end__gte=now).order_by('bell')
+    radishes = Radish.objects.filter(start__lte=now).filter(end__gte=now).order_by('bell')
     context = {'radishes':radishes}
     return render(request,'community/radishes.html',context)
 
